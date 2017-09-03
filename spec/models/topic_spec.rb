@@ -6,6 +6,9 @@ RSpec.describe Topic, type: :model do
   let(:public) { true }
   let(:topic) { Topic.create!(name: name, description: description) }
 
+
+  it { is_expected.to validate_length_of(:name).is_at_least(5) }
+  it { is_expected.to validate_length_of(:description).is_at_least(15) }
  # #1
   describe "attributes" do
     it "has name, description, and public attributes" do
