@@ -3,7 +3,6 @@ require 'random_data'
 # Create Users
 5.times do
   User.create!(
-  # #3
     name:     RandomData.random_name,
     email:    RandomData.random_email,
     password: RandomData.random_sentence
@@ -17,6 +16,14 @@ admin = User.create!(
   email:    'admin@example.com',
   password: 'helloworld',
   role:     'admin'
+)
+
+# Create a moderator user
+moderator = User.create!(
+  name:     'Moderator User',
+  email:    'moderator@example.com',
+  password: 'helloworld',
+  role:     'moderator'
 )
 
 # Create a member
