@@ -4,6 +4,7 @@ RSpec.describe User, type: :model do
   let(:user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "password") }
 
   it { is_expected.to have_many(:posts) }
+  it { is_expected.to have_many(:comments) }
 
   # Shoulda tests for name
   it { is_expected.to validate_presence_of(:name) }
@@ -60,21 +61,21 @@ RSpec.describe User, type: :model do
 
     context "admin user" do
 
-       before do
-         user.admin!
-       end
+      before do
+        user.admin!
+      end
 
-       it "returns false for #member?" do
-         expect(user.member?).to be_falsey
-       end
+      it "returns false for #member?" do
+        expect(user.member?).to be_falsey
+      end
 
-       it "returns true for #admin?" do
-         expect(user.admin?).to be_truthy
-       end
+      it "returns true for #admin?" do
+        expect(user.admin?).to be_truthy
+      end
 
-     end
+    end
 
-   end
+  end
 
   describe "invalid user" do
     let(:user_with_invalid_name) { User.new(name: "", email: "user@bloccit.com") }
