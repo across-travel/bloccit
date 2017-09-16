@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  get 'msdf/show'
+  resources :labels, only: [:show]
 
   resources :topics do
     resources :posts, except: [:index]
