@@ -1,9 +1,10 @@
 class Post < ApplicationRecord
   belongs_to :topic
   belongs_to :user
-	has_many :comments, dependent: :destroy
   has_many :labelings, as: :labelable
   has_many :labels, through: :labelings
+  has_many :commentings, as: :commentable, dependent: :destroy
+  has_many :comments, through: :commentings, dependent: :destroy
 
   default_scope { order('created_at DESC') }
 

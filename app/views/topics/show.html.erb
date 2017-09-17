@@ -27,6 +27,15 @@
       </div>
     <% end %>
   </div>
+  <div class="col-md-8">
+    <div>
+      <h3>Comments</h3>
+      <%= render @topic.comments, parent: @topic %>
+    </div>
+    <% if current_user %>
+       <%= render 'comments/form', comment: Comment.new, parent: @topic %>
+    <% end %>
+  </div>
   <% if current_user %>
     <div class="col-md-4">
         <%= link_to "New Post", new_topic_post_path(@topic), class: 'btn btn-success' %>
