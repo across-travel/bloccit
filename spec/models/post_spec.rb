@@ -78,4 +78,11 @@ RSpec.describe Post, type: :model do
       end
     end
   end
+
+  describe "#create_vote" do
+    it "upvotes the post.user vote" do
+      post_user = post.user
+      expect(post.votes.where(value: 1, user: post_user).exists?).to be_truthy
+    end
+  end
 end
