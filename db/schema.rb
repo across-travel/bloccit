@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170915193000) do
+ActiveRecord::Schema.define(version: 20170920140403) do
+
+  create_table "commentings", force: :cascade do |t|
+    t.integer "comment_id"
+    t.string "commentable_type"
+    t.integer "commentable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["comment_id"], name: "index_commentings_on_comment_id"
+    t.index ["commentable_type", "commentable_id"], name: "index_commentings_on_commentable_type_and_commentable_id"
+  end
 
   create_table "comments", force: :cascade do |t|
     t.text "body"
@@ -45,6 +55,7 @@ ActiveRecord::Schema.define(version: 20170915193000) do
     t.datetime "updated_at", null: false
     t.integer "topic_id"
     t.integer "user_id"
+    t.float "rank"
     t.index ["topic_id"], name: "index_posts_on_topic_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
@@ -82,6 +93,16 @@ ActiveRecord::Schema.define(version: 20170915193000) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "role"
+  end
+
+  create_table "votes", force: :cascade do |t|
+    t.integer "value"
+    t.integer "user_id"
+    t.integer "post_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_votes_on_post_id"
+    t.index ["user_id"], name: "index_votes_on_user_id"
   end
 
 end
