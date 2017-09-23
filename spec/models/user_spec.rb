@@ -116,4 +116,16 @@ RSpec.describe User, type: :model do
       expect(known_user.avatar_url(48)).to eq(expected_gravatar)
     end
   end
+
+  describe "#favorites_list" do
+    let(:known_user) { create(:user) }
+    let(:known_topic) { create(:topic, user: known_user) }
+    let(:known_post) { create(:post, topic: known_topic, user: known_user) }
+    let(:favorite) { Favorite.create!(post: known_post, user: known_user) }
+
+    it "returns a list of favorited posts" do
+      expected_post_list = Favorite.where(user: known_user)
+      expect(known_user.favorites_list).to eq(expected_post_list)
+    end
+  end
 end

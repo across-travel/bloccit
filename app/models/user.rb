@@ -29,4 +29,12 @@ class User < ApplicationRecord
     gravatar_id = Digest::MD5::hexdigest(self.email).downcase
     "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"
   end
+
+  def activity_empty?
+    self.comments.empty? && self.posts.empty?
+  end
+
+  def favorites_list
+    self.favorites
+  end
 end
