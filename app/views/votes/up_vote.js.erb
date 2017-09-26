@@ -1,0 +1,5 @@
+<% if @vote.valid? %>
+ 	$('.js-votes-<%= @post.id %>').html("<%= escape_javascript(render partial: 'votes/voting', locals: { post: @vote.post }) %>");
+<% else %>
+ 	$('.js-votes-<%= @post.id %>').html("<%= escape_javascript(render partial: 'votes/voting', locals: { post: @vote.post }) %>");
+<% end %>
