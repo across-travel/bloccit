@@ -4,32 +4,53 @@ class CommentsController < ApplicationController
 
   def create
     @post = Post.find(params[:post_id])
-    comment = @post.comments.new(comment_params)
-    comment.user = current_user
+    @comment = @post.comments.new(comment_params)
+    @comment.user = current_user
+    @new_comment = Comment.new
 
-    if comment.save
-      flash[:notice] = "Comment saved successfully."
-      redirect_to [@post.topic, @post]
-    else
-      flash[:alert] = "Comment failed to save."
-      redirect_to [@post.topic, @post]
+    respond_to do |format|
+      format.html do
+        comment_save
+        redirect_to :back, fallback: root_path
+      end
+      format.js do
+        comment_save
+      end
     end
   end
 
   def destroy
     @post = Post.find(params[:post_id])
-    comment = @post.comments.find(params[:id])
+    @comment = @post.comments.find(params[:id])
 
-    if comment.destroy
-      flash[:notice] = "Comment was deleted successfully."
-      redirect_to [@post.topic, @post]
-     else
-      flash[:alert] = "Comment couldn't be deleted. Try again."
-      redirect_to [@post.topic, @post]
+    respond_to do |format|
+      format.html do
+        comment_delete
+        redirect_to :back, fallback: root_path
+      end
+      format.js do
+        comment_delete
+      end
     end
   end
 
   private
+
+  def comment_save
+    if @comment.save
+      flash.now[:notice] = "Comment saved successfully."
+    else
+      flash.now[:alert] = "Comment failed to save."
+    end
+  end
+
+  def comment_delete
+    if @comment.destroy
+      flash.now[:notice] = "Comment was deleted successfully."
+    else
+      flash.now[:alert] = "Comment couldn't be deleted. Try again."
+    end
+  end
 
   def comment_params
     params.require(:comment).permit(:body)
