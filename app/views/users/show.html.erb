@@ -21,8 +21,19 @@
   </div>
 </div>
 
-<h2>Posts</h2>
-<%= render @user.posts %>
- 
-<h2>Comments</h2>
-<%= render @user.comments %>
+<h2>User activity</h2>
+<% @collection.each do |collection| %>
+  <% if collection.instance_of? Post %>
+    <%= render partial: 'posts/post', locals: { post: collection } %>
+    <hr>
+  <% elsif collection.instance_of? Comment %>
+    <%= render partial: 'comments/comment', locals: { comment: collection } %>
+    <hr>
+  <% else %>
+    <% if collection.value == 1 %> 
+      <%= collection.user.name %> upvoted the following post <%= time_ago_in_words(collection.updated_at) %> ago
+    <% end %>
+    <%= render partial: 'posts/post', locals: { post: collection.post } %>
+    <hr>
+  <% end %>
+<% end -%>
