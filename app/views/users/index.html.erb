@@ -1,0 +1,20 @@
+<h1>Users</h1>
+ 
+<div class="row">
+  <div class="col-md-8">
+    <% @users.each do |user| %>
+      <div class="media">
+        <div class="media-body">
+          <h4 class="media-heading">
+            <%= image_tag user.avatar_url(40), class: 'media-object pull-left' %>
+            <%= link_to user.name, user %>
+            <div class="pull-right">
+              <%= render partial: 'follow_form', locals: { user: user } %>
+            </div>
+          </h4>
+        </div>
+      </div>
+      <hr>
+    <% end %>
+  </div>
+</div>

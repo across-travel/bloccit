@@ -8,7 +8,6 @@ require 'random_data'
     password: RandomData.random_sentence
   )
 end
-users = User.all
 
 # Create an admin user
 admin = User.create!(
@@ -24,6 +23,8 @@ member = User.create!(
   email:    'member@example.com',
   password: 'helloworld'
 )
+
+users = User.all
 
 # Create Topics
 15.times do
@@ -57,6 +58,14 @@ Comment.create!(
   body: RandomData.random_paragraph
 )
 end
+
+# Following relationships
+user  = users.last
+following = users[4..6]
+followers = users[1..3]
+following.each { |followed| user.follow(followed) }
+followers.each { |follower| follower.follow(user) }
+
 
 puts "Seed finished"
 puts "#{Topic.count} topics created"

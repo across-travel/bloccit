@@ -10,7 +10,15 @@ RSpec.describe UsersController, type: :controller do
     }
   end
 
+  describe "GET index" do
+    it "returns http success" do
+      get :index
+      expect(response).to have_http_status(:success)
+    end
+  end
+
   describe "GET new" do
+
     it "returns http success" do
       get :new
       expect(response).to have_http_status(:success)
@@ -60,12 +68,8 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
-   describe "not signed in" do
+  describe "not signed in" do
     let(:factory_user) { create(:user) }
-
-    before do
-      post :create, params: {user: new_user_attributes}
-    end
 
     it "returns http success" do
       get :show, params: {id: factory_user.id}
@@ -80,6 +84,16 @@ RSpec.describe UsersController, type: :controller do
     it "assigns factory_user to @user" do
       get :show, params: { id: factory_user.id}
       expect(assigns(:user)).to eq(factory_user)
+    end
+
+    it "should redirect following" do
+      get :following, params: { id: factory_user.id }
+      expect(response).to redirect_to(new_session_path)
+    end
+
+    it "should redirect followers" do
+      get :followers, params: { id: factory_user.id }
+      expect(response).to redirect_to(new_session_path)
     end
   end
 end

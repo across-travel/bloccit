@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   let(:user) { create(:user) }
+  let(:second_user) { create(:user) }
 
   it { is_expected.to have_many(:posts) }
   it { is_expected.to have_many(:comments) }
@@ -120,6 +121,24 @@ RSpec.describe User, type: :model do
   describe "#generate_auth_token" do
     it "creates a token" do
       expect(user.auth_token).to_not be_nil
+    end
+  end
+
+  describe "following and unfollowing" do
+    it "should follow another user" do
+      user.follow(second_user)
+      expect(user.following?(second_user)).to be_truthy
+    end
+
+    it "should unfollow another user" do
+      user.follow(second_user)
+      user.unfollow(second_user)
+      expect(user.following?(second_user)).to be_falsey
+    end
+
+    it "checks whether one user follows another user" do
+      user.follow(second_user)
+      expect(second_user.followers.include?(user)).to be_truthy
     end
   end
 

@@ -1,4 +1,10 @@
 class UsersController < ApplicationController
+  before_action :require_sign_in, only: [:following, :followers]
+
+  def index
+    @users = User.all
+  end
+
   def new
     @user = User.new
   end
@@ -23,5 +29,19 @@ class UsersController < ApplicationController
       flash.now[:alert] = "There was an error creating your account. Please try again."
       render :new
     end
+  end
+
+  def following
+    @title = "Following"
+    @user  = User.find(params[:id])
+    @users = @user.following
+    render 'show_follow'
+  end
+
+  def followers
+    @title = "Followers"
+    @user  = User.find(params[:id])
+    @users = @user.followers
+    render 'show_follow'
   end
 end

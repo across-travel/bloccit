@@ -5,3 +5,29 @@
   margin-bottom: 5px;
   margin-right: 5px;
 }
+
+.stats {
+  overflow: auto;
+  padding: 0;
+  a {
+    float: left;
+    padding: 0 10px;
+    border-left: 1px solid #D3D3D3;
+    color: gray;
+    &:first-child {
+      padding-left: 0;
+      border: 0;
+    }
+    &:hover {
+      text-decoration: none;
+      color: blue;
+    }
+  }
+  strong {
+    display: block;
+  }
+}
+
+.users.follow {
+  padding: 0;
+}

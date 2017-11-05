@@ -10,16 +10,22 @@
       <% end %>
       <div class="media-body">
         <h2 class="media-heading"><%= @user.name %></h2>
+        <%= render partial: 'follow_form', locals: { user: @user } %>
         <small>
           <%= pluralize(@user.posts.count, 'post') %>,
           <div class='js-comments-count'>
             <%= pluralize(@user.comments.count, 'comment') %>    
           </div>
         </small>
+        <section class="stats">
+          <%= render 'stats' %>
+        </section>
       </div>
     </div>
   </div>
 </div>
+
+
 
 <h2>Posts</h2>
 <%= render @user.posts %>
