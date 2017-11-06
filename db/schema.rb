@@ -10,17 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171104204450) do
-
-  create_table "commentings", force: :cascade do |t|
-    t.integer "comment_id"
-    t.string "commentable_type"
-    t.integer "commentable_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["comment_id"], name: "index_commentings_on_comment_id"
-    t.index ["commentable_type", "commentable_id"], name: "index_commentings_on_commentable_type_and_commentable_id"
-  end
+ActiveRecord::Schema.define(version: 20171106202153) do
 
   create_table "comments", force: :cascade do |t|
     t.text "body"
@@ -41,22 +31,6 @@ ActiveRecord::Schema.define(version: 20171104204450) do
     t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
-  create_table "labelings", force: :cascade do |t|
-    t.integer "label_id"
-    t.string "labelable_type"
-    t.integer "labelable_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["label_id"], name: "index_labelings_on_label_id"
-    t.index ["labelable_type", "labelable_id"], name: "index_labelings_on_labelable_type_and_labelable_id"
-  end
-
-  create_table "labels", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "posts", force: :cascade do |t|
     t.string "title"
     t.text "body"
@@ -69,14 +43,6 @@ ActiveRecord::Schema.define(version: 20171104204450) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
-  create_table "questions", force: :cascade do |t|
-    t.string "title"
-    t.text "body"
-    t.boolean "resolved"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "relationships", force: :cascade do |t|
     t.integer "follower_id"
     t.integer "followed_id"
@@ -87,14 +53,20 @@ ActiveRecord::Schema.define(version: 20171104204450) do
     t.index ["follower_id"], name: "index_relationships_on_follower_id"
   end
 
-  create_table "sponsored_posts", force: :cascade do |t|
-    t.string "title"
-    t.text "body"
-    t.integer "price"
-    t.integer "topic_id"
+  create_table "taggings", force: :cascade do |t|
+    t.integer "tag_id"
+    t.string "taggable_type"
+    t.integer "taggable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["topic_id"], name: "index_sponsored_posts_on_topic_id"
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+    t.index ["taggable_type", "taggable_id"], name: "index_taggings_on_taggable_type_and_taggable_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "topics", force: :cascade do |t|

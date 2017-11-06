@@ -1,0 +1,23 @@
+<h1>Posts</h1>
+
+<% @posts.each do |post| %>
+  <div class="media">
+    <%= render partial: 'votes/voting', locals: { post: post } %>
+    <div class="media-body">
+      <h4 class="media-heading">
+        <%= link_to post.title, topic_post_path(post.topic, post) %>
+      </h4>
+
+      <small>
+        submitted <%= time_ago_in_words(post.created_at) %> ago by <%= post.user.name %> <br>
+        <%= post.comments.count %> Comments
+       </small>
+    </div>
+  </div>
+<% end %>
+
+<h1>Comments</h1>
+
+<div>
+  <%= render @comments %>
+</div>

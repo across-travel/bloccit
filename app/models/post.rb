@@ -2,10 +2,11 @@ class Post < ApplicationRecord
   belongs_to :topic
   belongs_to :user
 	has_many :comments, dependent: :destroy
-  has_many :labelings, as: :labelable
-  has_many :labels, through: :labelings
   has_many :votes, dependent: :destroy
   has_many :favorites, dependent: :destroy
+
+  has_many :taggings, as: :taggable
+  has_many :tags, through: :taggings
 
   default_scope { order('rank DESC') }
 
@@ -32,5 +33,25 @@ class Post < ApplicationRecord
     age_in_days = (created_at - Time.new(1970,1,1)) / 1.day.seconds
     new_rank = points + age_in_days
     update_attribute(:rank, new_rank)
+  end
+
+  after_create do
+    post = Post.find_by(id: self.id)
+    hashtags = self.body.scan(/#\w+/)
+    hashtags.uniq.map do |hashtag|
+      tag = Tag.find_or_create_by(name: hashtag.downcase.delete('#'))
+      post.tags << tag
+    end
+  end
+
+
+  before_update do
+    post = Post.find_by(id: self.id)
+    post.tags.clear
+    hashtags = self.body.scan(/#\w+/)
+    hashtags.uniq.map do |hashtag|
+      tag = Tag.find_or_create_by(name: hashtag.downcase.delete('#'))
+      post.tags << tag
+    end
   end
 end

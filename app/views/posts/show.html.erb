@@ -5,19 +5,12 @@
     <small>
       submitted <%= time_ago_in_words(@post.created_at) %> ago by <%= @post.user.name %>
    	</small>
-    <div class="row">
-      <div class="col-md-8">
-        <%= render partial: "labels/list", locals: { labels: @post.labels } %>
-        <br />
-      </div>
-    </div>
-    <br />
   </h1>
 </div>
  
 <div class="row">
   <div class="col-md-8">
-  	<p><%= @post.body %></p>
+  	<p><%= render_with_hashtags(@post.body) %></p>
     <div>
       <h3>Comments</h3>
       <div class='js-comments'>

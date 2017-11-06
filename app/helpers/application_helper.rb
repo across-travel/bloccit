@@ -18,4 +18,9 @@ module ApplicationHelper
     response = "$('.ajax_flash').remove();$('#{div_class}').prepend('#{flash_div}');"
     response.html_safe
   end
+
+  def render_with_hashtags(body)
+    body.gsub(/#\w+/){|word| link_to word, "/hashtag/#{word.delete('#')}"}.html_safe
+  end
+
 end

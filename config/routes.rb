@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  resources :labels, only: [:show]
-
   resources :topics do
     resources :posts, except: [:index]
   end
@@ -28,6 +26,8 @@ Rails.application.routes.draw do
 
   resources :sessions, only: [:new, :create, :destroy]
   resources :relationships, only: [:create, :destroy]
+
+  get '/hashtag/:name', to: 'posts#hashtags'
 
   get 'about', to: 'welcome#about'
 

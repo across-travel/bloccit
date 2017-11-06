@@ -5,8 +5,8 @@ RSpec.describe Post, type: :model do
   let(:user) { create(:user) }
   let(:post) { create(:post) }
 
-  it { is_expected.to have_many(:labelings) }
-  it { is_expected.to have_many(:labels).through(:labelings) }
+  it { is_expected.to have_many(:taggings) }
+  it { is_expected.to have_many(:tags).through(:taggings) }
 
   it { is_expected.to belong_to(:topic) }
   it { is_expected.to have_many(:votes) }
