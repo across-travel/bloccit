@@ -31,6 +31,22 @@ ActiveRecord::Schema.define(version: 20171106202153) do
     t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
+  create_table "labelings", force: :cascade do |t|
+    t.integer "label_id"
+    t.string "labelable_type"
+    t.integer "labelable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["label_id"], name: "index_labelings_on_label_id"
+    t.index ["labelable_type", "labelable_id"], name: "index_labelings_on_labelable_type_and_labelable_id"
+  end
+
+  create_table "labels", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "posts", force: :cascade do |t|
     t.string "title"
     t.text "body"

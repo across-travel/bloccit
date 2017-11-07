@@ -12,8 +12,8 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @posts = @user.posts.visible_to(current_user)
-    @votes = @user.votes.visible_to(current_user).where(value: 1)
-    @comments = @user.comments.visible_to(current_user)
+    @votes = @user.votes.where(value: 1)
+    @comments = @user.comments
 
     @collection = single_collection(@posts, @votes, @comments)
   end
