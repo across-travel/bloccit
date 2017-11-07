@@ -1,7 +1,8 @@
 <%= content_tag :div, class: 'media', id: "comment-#{comment.id}" do %>
  	<div class="media-body">
    	<small>
-     	<%= comment.user.name %> commented on <%= link_to comment.post.title, topic_post_path(comment.post.topic,comment.post) %> <%= time_ago_in_words(comment.created_at) %> ago
+   		<% path = comment.post.topic ? topic_post_path(comment.post.topic, comment.post) : post_path(comment.post) %>
+     	<%= comment.user.name %> commented on <%= link_to comment.post.title, path %> <%= time_ago_in_words(comment.created_at) %> ago
      	<% if user_is_authorized_for_comment?(comment) %>
         | <%= link_to "Delete", [comment.post, comment], method: :delete, remote: true %>
       <% end %>
