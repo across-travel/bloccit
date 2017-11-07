@@ -12,6 +12,10 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @posts = @user.posts.visible_to(current_user)
+    @votes = @user.votes.visible_to(current_user).where(value: 1)
+    @comments = @user.comments.visible_to(current_user)
+
+    @collection = single_collection(@posts, @votes, @comments)
   end
 
   def create
@@ -43,5 +47,22 @@ class UsersController < ApplicationController
     @user  = User.find(params[:id])
     @users = @user.followers
     render 'show_follow'
+  end
+
+  private
+
+  def single_collection(posts, votes, comments)
+    collection = []
+    posts.map{ |post| collection << post }
+    votes.map{ |vote| collection << vote }
+    comments.map{ |comment| collection << comment }
+
+    collection.sort_by do |collection|
+      if collection.instance_of?(Post) || collection.instance_of?(Comment)
+        collection.created_at
+      else
+        collection.updated_at
+      end
+    end.reverse
   end
 end

@@ -1,6 +1,11 @@
 class PostsController < ApplicationController
   before_action :require_sign_in, except: :show
-  before_action :authorize_user, except: [:show, :new, :create, :hashtags]
+  before_action :authorize_user, except: [:index, :show, :new, :create, :hashtags]
+  before_action :topic_locate, only: [:new, :create]
+
+  def index
+    @posts = Post.where(topic: nil)
+  end
 
   def show
     @post = Post.find(params[:id])
@@ -8,17 +13,15 @@ class PostsController < ApplicationController
 
   def new
   	@post = Post.new
-    @topic = Topic.find(params[:topic_id])
   end
 
   def create
-    @topic = Topic.find(params[:topic_id])
-    @post = @topic.posts.build(post_params)
-    @post.user = current_user
+    @post = current_user.posts.new(post_params)
+    @post.topic = @topic if @topic
 
     if @post.save
       flash[:notice] = "Post was saved successfully."
-      redirect_to [@topic, @post]
+      redirect_to [@topic, @post].compact
     else
       flash.now[:alert] = "There was an error saving the post. Please try again."
       render :new
@@ -35,7 +38,8 @@ class PostsController < ApplicationController
 
     if @post.save
       flash[:notice] = "Post was updated successfully."
-      redirect_to [@post.topic, @post]
+
+      redirect_to [@post.topic, @post].compact
     else
       flash.now[:alert] = "There was an error saving the post. Please try again."
       render :edit
@@ -44,10 +48,11 @@ class PostsController < ApplicationController
 
   def destroy
     @post = Post.find(params[:id])
- # #8
+
     if @post.destroy
       flash[:notice] = "\"#{@post.title}\" was deleted successfully."
-      redirect_to @post.topic
+      redirect_to @post.topic if @post.topic
+      redirect_to posts_path if @post.topic.nil?
     else
       flash.now[:alert] = "There was an error deleting the post."
       render :show
@@ -61,6 +66,10 @@ class PostsController < ApplicationController
   end
 
   private
+
+  def topic_locate
+    @topic = Topic.find(params[:topic_id]) if params[:topic_id].present?
+  end
 
   def post_params
     params.require(:post).permit(:title, :body)
