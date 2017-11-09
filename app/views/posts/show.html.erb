@@ -10,7 +10,7 @@
  
 <div class="row">
   <div class="col-md-8">
-  	<p><%= render_with_hashtags(@post.body) %></p>
+  	<p id="post_body"><%= render_with_hashtags_and_mentions(@post.body) %></p>
     <div>
       <h3>Comments</h3>
       <div class='js-comments'>
@@ -40,8 +40,5 @@
         </small>
       </div>
     </h3>
-    <% if current_user %>
-      <%= render partial: 'favorites/favorite', locals: { post: @post } %>
-    <% end %>
   </div>
 </div>

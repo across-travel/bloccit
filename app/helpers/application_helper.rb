@@ -19,8 +19,12 @@ module ApplicationHelper
     response.html_safe
   end
 
-  def render_with_hashtags(body)
+  def render_with_hashtags_and_mentions(body)
+    body.gsub!(/@\w+/) do |word|
+      user = User.find_by(username: word)
+      break if user.nil?
+      link_to word, user
+    end
     body.gsub(/#\w+/){|word| link_to word, "/hashtag/#{word.delete('#')}"}.html_safe
   end
-
 end

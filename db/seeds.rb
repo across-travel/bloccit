@@ -4,6 +4,7 @@ require 'random_data'
 5.times do
   User.create!(
     name:     RandomData.random_name,
+    username: "@" + RandomData.random_word,
     email:    RandomData.random_email,
     password: RandomData.random_sentence
   )
@@ -12,6 +13,7 @@ end
 # Create an admin user
 admin = User.create!(
   name:     'Admin User',
+  username: '@admin',
   email:    'admin@example.com',
   password: 'helloworld',
   role:     'admin'
@@ -20,6 +22,7 @@ admin = User.create!(
 # Create a member
 member = User.create!(
   name:     'Member User',
+  username: '@member',
   email:    'member@example.com',
   password: 'helloworld'
 )

@@ -5,6 +5,6 @@ class CreateTaggings < ActiveRecord::Migration[5.1]
       t.references :taggable, polymorphic: true, index: true
       t.timestamps null: false
     end
-     add_foreign_key :taggings, :tags
+    add_foreign_key :taggings, :tags
   end
 end

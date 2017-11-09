@@ -7,6 +7,6 @@
         | <%= link_to "Delete", [comment.post, comment], method: :delete, remote: true %>
       <% end %>
    	</small>
-   	<p><%= render_with_hashtags(comment.body) %></p>
+   	<p><%= render_with_hashtags_and_mentions(comment.body) %></p>
  	</div>
 <% end %>

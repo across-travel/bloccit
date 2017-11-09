@@ -4,6 +4,7 @@ RSpec.describe UsersController, type: :controller do
   let(:new_user_attributes) do
     {
         name: "BlocHead",
+        username: "Bloc_head",
         email: "blochead@bloc.io",
         password: "blochead",
         password_confirmation: "blochead"
@@ -45,6 +46,11 @@ RSpec.describe UsersController, type: :controller do
     it "sets user name properly" do
       post :create, params: {user: new_user_attributes}
       expect(assigns(:user).name).to eq new_user_attributes[:name]
+    end
+
+    it "sets username properly" do
+      post :create, params: {user: new_user_attributes}
+      expect(assigns(:user).username).to eq "@" + new_user_attributes[:username]
     end
 
     it "sets user email properly" do

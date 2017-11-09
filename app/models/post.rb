@@ -3,10 +3,12 @@ class Post < ApplicationRecord
   belongs_to :user
 	has_many :comments, dependent: :destroy
   has_many :votes, dependent: :destroy
-  has_many :favorites, dependent: :destroy
 
   has_many :taggings, as: :taggable
   has_many :tags, through: :taggings
+
+  has_many :mentionings, as: :mentionable
+  has_many :mentions, through: :mentionings
 
   default_scope { order('rank DESC') }
 
@@ -50,7 +52,27 @@ class Post < ApplicationRecord
     hashtags = self.body.scan(/#\w+/)
     hashtags.uniq.map do |hashtag|
       tag = Tag.find_or_create_by(name: hashtag.downcase.delete('#'))
+
       post.tags << tag
+    end
+  end
+
+  after_create do
+    post = Post.find_by(id: self.id)
+    mentions = self.body.scan(/@\w+/)
+    mentions.uniq.map do |mention|
+      username = Mention.find_or_create_by(username: mention)
+      post.mentions << username if username.persisted?
+    end
+  end
+
+  before_update do
+    post = Post.find_by(id: self.id)
+    post.mentions.clear
+    mentions = self.body.scan(/@\w+/)
+    mentions.uniq.map do |mention|
+      username = Mention.find_or_create_by(username: mention)
+      post.mentions << username if username.persisted?
     end
   end
 end

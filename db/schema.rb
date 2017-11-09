@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171106202153) do
+ActiveRecord::Schema.define(version: 20171109001026) do
 
   create_table "comments", force: :cascade do |t|
     t.text "body"
@@ -20,15 +20,6 @@ ActiveRecord::Schema.define(version: 20171106202153) do
     t.integer "user_id"
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
-  end
-
-  create_table "favorites", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "post_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["post_id"], name: "index_favorites_on_post_id"
-    t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
   create_table "labelings", force: :cascade do |t|
@@ -45,6 +36,23 @@ ActiveRecord::Schema.define(version: 20171106202153) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "mentionings", force: :cascade do |t|
+    t.integer "mention_id"
+    t.string "mentionable_type"
+    t.integer "mentionable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["mention_id"], name: "index_mentionings_on_mention_id"
+    t.index ["mentionable_type", "mentionable_id"], name: "index_mentionings_on_mentionable_type_and_mentionable_id"
+  end
+
+  create_table "mentions", force: :cascade do |t|
+    t.string "username"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["username"], name: "index_mentions_on_username", unique: true
   end
 
   create_table "posts", force: :cascade do |t|
@@ -101,6 +109,8 @@ ActiveRecord::Schema.define(version: 20171106202153) do
     t.datetime "updated_at", null: false
     t.integer "role"
     t.string "auth_token"
+    t.string "username"
+    t.index ["username"], name: "index_users_on_username", unique: true
   end
 
   create_table "votes", force: :cascade do |t|

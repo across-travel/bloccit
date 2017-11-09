@@ -16,8 +16,15 @@
       <% end %>
  <!-- #12 -->
       <%= form_group_tag(@user.errors[:name]) do %>
-        <%= f.label :name %>
+        <%= f.label :name, "Full Name" %>
         <%= f.text_field :name, autofocus: true, class: 'form-control', placeholder: "Enter name" %>
+      <% end %>
+      <%= form_group_tag(@user.errors[:name]) do %>
+        <%= f.label :username %>
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <div class="input-group-addon">@</div>
+          <%= f.text_field :username, autofocus: true, class: 'form-control', placeholder: "Enter username" %>
+        </div>
       <% end %>
       <%= form_group_tag(@user.errors[:email]) do %>
         <%= f.label :email %>

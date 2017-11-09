@@ -7,7 +7,6 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :votes, dependent: :destroy
-  has_many :favorites, dependent: :destroy
 
   has_many :active_relationships, class_name:  "Relationship",
                                   foreign_key: "follower_id",
@@ -19,6 +18,11 @@ class User < ApplicationRecord
 
   has_many :following, through: :active_relationships, source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
+
+  validates :username, length: { minimum: 1, maximum: 20 },
+                       format: { with: /\A@[^@\s][a-zA-Z0-9\w]+\Z/ },
+                       presence: true,
+                       uniqueness: true
 
   validates :name, length: { minimum: 1, maximum: 100 }, presence: true
 
@@ -33,10 +37,6 @@ class User < ApplicationRecord
   has_secure_password
 
   enum role: [:member, :admin]
-
-  def favorite_for(post)
-    favorites.where(post_id: post.id).first
-  end
 
   def avatar_url(size)
     gravatar_id = Digest::MD5::hexdigest(self.email).downcase
