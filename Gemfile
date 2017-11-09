@@ -40,7 +40,6 @@ gem 'figaro', '1.0'
 gem 'factory_girl_rails', '~> 4.0'
 gem 'will_paginate', '~> 3.1.0'
 gem 'jquery-atwho-rails'
-gem 'redcarpet'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -6,7 +6,7 @@ RSpec.describe Tag, type: :model do
   let(:comment) { Comment.create!(body: 'Comment Body', post: post, user: user) }
   let(:tag) { create(:tag) }
 
-  it { is_expected.to have_many :taggings }
+  it { is_expected.to have_many(:taggings) }
 
   it { is_expected.to have_many(:comments).through(:taggings) }
   it { is_expected.to have_many(:posts).through(:taggings) }
