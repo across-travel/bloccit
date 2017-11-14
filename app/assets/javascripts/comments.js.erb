@@ -1,4 +1,4 @@
 $(function(){
     data = <%= User.connection.select_values("SELECT username FROM users").to_json.gsub("@", "") %>;
-    $('#post_body').atwho({at:"@", 'data':data});
+    $('#comment_body').atwho({at:"@", 'data':data});
 });
