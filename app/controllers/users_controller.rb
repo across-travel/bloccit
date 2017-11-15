@@ -50,6 +50,13 @@ class UsersController < ApplicationController
     render 'show_follow'
   end
 
+  def subscriptions
+    @title = "Subscriptions"
+    @user  = User.find(params[:id])
+    @subscriptions = @user.subscriptions
+    render 'show_subscriptions'
+  end
+
   private
 
   def single_collection(posts, votes, comments)

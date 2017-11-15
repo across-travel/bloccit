@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [:new, :create, :show, :index] do
     member do
-      get :following, :followers
+      get :following, :followers, :subscriptions
     end
   end
 

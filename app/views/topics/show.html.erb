@@ -29,6 +29,7 @@
     <div class="col-md-4">
         <%= link_to "New Post", new_topic_post_path(@topic), class: 'btn btn-success' %>
         <%= render partial: 'subscription_form' %>
+        <%= pluralize(@topic.subscriptions.count, "user") %>
     </div>
   <% end -%>
 </div>
