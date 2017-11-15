@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :subscriptions, only: [:create, :destroy]
+
   namespace :api do
     namespace :v1 do
       resources :users, only: [:index, :show, :create, :update]

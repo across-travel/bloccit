@@ -69,6 +69,10 @@ followers = users[1..3]
 following.each { |followed| user.follow(followed) }
 followers.each { |follower| follower.follow(user) }
 
+# Subscriptions
+subscribe_topics = topics[10..12]
+subscribe_topics.each { |topic| user.subscribe(topic) }
+
 
 puts "Seed finished"
 puts "#{Topic.count} topics created"

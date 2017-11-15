@@ -16,6 +16,9 @@ class User < ApplicationRecord
                                    foreign_key: "followed_id",
                                    dependent:   :destroy
 
+  has_many :subscriptions, dependent: :destroy
+  has_many :topics, through: :subscriptions
+
   has_many :following, through: :active_relationships, source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
 
@@ -65,4 +68,15 @@ class User < ApplicationRecord
     following.include?(other_user)
   end
 
+  def subscribe(topic)
+    subscriptions.create(topic: topic)
+  end
+
+  def unsubscribe(topic)
+    subscriptions.find_by(topic: topic).destroy
+  end
+
+  def subscribed_to?(topic)
+    topics.include?(topic)
+  end
 end

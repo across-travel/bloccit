@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   let(:user) { create(:user) }
+  let(:topic) { create(:topic) }
   let(:second_user) { create(:user) }
 
   it { is_expected.to have_many(:posts) }
@@ -127,6 +128,19 @@ RSpec.describe User, type: :model do
     it "checks whether one user follows another user" do
       user.follow(second_user)
       expect(second_user.followers.include?(user)).to be_truthy
+    end
+  end
+
+  describe "subscribing" do
+    it "should subsribe to a topic" do
+      user.subscribe(topic)
+      expect(user.subscribed_to?(topic)).to be_truthy
+    end
+
+    it "should unsubsribe to a topic" do
+      user.subscribe(topic)
+      user.unsubscribe(topic)
+      expect(user.subscribed_to?(topic)).to be_falsey
     end
   end
 
