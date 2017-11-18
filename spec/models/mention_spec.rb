@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Mention, type: :model do
   let(:user) { create(:user) }
   let(:post) { create(:post, user: user) }
-  let(:comment) { Comment.create!(body: 'Comment Body', post: post, user: user) }
+  let(:comment) { Comment.create!(body: 'Comment Body', post: post, user: user, commentable: post) }
   let(:mention) { create(:mention, username: user.username) }
 
   it { is_expected.to have_many(:mentionings) }

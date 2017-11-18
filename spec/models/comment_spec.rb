@@ -4,7 +4,7 @@ RSpec.describe Comment, type: :model do
   let(:topic) { create(:topic) }
   let(:user) { create(:user) }
   let(:post) { create(:post) }
-	let(:comment) { Comment.create!(body: 'Comment Body', post: post, user: user) }
+	let(:comment) { Comment.create!(body: 'Comment Body', post: post, user: user, commentable: post) }
 
   it { is_expected.to have_many(:taggings) }
   it { is_expected.to have_many(:tags).through(:taggings) }

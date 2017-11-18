@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Tag, type: :model do
   let(:user) { create(:user) }
   let(:post) { create(:post, user: user) }
-  let(:comment) { Comment.create!(body: 'Comment Body', post: post, user: user) }
+  let(:comment) { Comment.create!(body: 'Comment Body', post: post, user: user, commentable: post) }
   let(:tag) { create(:tag) }
 
   it { is_expected.to have_many(:taggings) }

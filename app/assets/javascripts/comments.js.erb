@@ -1,4 +1,13 @@
 $(function(){
-    data = <%= User.connection.select_values("SELECT username FROM users").to_json.gsub("@", "") %>;
-    $('#comment_body').atwho({at:"@", 'data':data});
+  data = <%= User.connection.select_values("SELECT username FROM users").to_json.gsub("@", "") %>;
+  $('#comment_body').atwho({at:"@", 'data':data});
 });
+
+<% Comment.all.each do |comment| %>
+	document.addEventListener('turbolinks:load', function(){
+	  $('#reply-<%= comment.id %>').click(function(e){
+	  	e.preventDefault();
+	  	$('#new_comment-<%= comment.id %>').slideToggle();
+	  });
+	});
+<% end %>

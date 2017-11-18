@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   end
 
   resources :posts do
-    resources :comments, only: [:create, :destroy]
+    resources :comments, only: [:create, :destroy], shallow: true do
+      resources :comments, only: [:create]
+    end
     post '/up-vote' => 'votes#up_vote', as: :up_vote
     post '/down-vote' => 'votes#down_vote', as: :down_vote
   end

@@ -1,12 +1,32 @@
 <%= content_tag :div, class: 'media', id: "comment-#{comment.id}" do %>
+<hr>
  	<div class="media-body">
    	<small>
-   		<% path = comment.post.topic ? topic_post_path(comment.post.topic, comment.post) : post_path(comment.post) %>
-     	<%= comment.user.name %> commented on <%= link_to comment.post.title, path %> <%= time_ago_in_words(comment.created_at) %> ago
+   		<% if comment.commentable.instance_of? Post %>
+	   		<% path = comment.commentable.topic ? topic_post_path(comment.commentable.topic, comment.commentable) : post_path(comment.commentable) %>
+	     	<%= comment.user.name %> commented on <%= link_to comment.commentable.title, path %> <%= time_ago_in_words(comment.created_at) %> ago
+	    <% else %>
+	    	<% post = find_post_in_commentable(comment.commentable) %>
+	    	<% path = post.topic ? topic_post_path(post.topic, post) : post_path(post) %>
+	     	<%= comment.user.name %> commented on <%= link_to post.title, path %> <%= time_ago_in_words(comment.created_at) %> ago
+	    <% end %>
      	<% if user_is_authorized_for_comment?(comment) %>
-        | <%= link_to "Delete", [comment.post, comment], method: :delete, remote: true %>
+        | <%= link_to "Delete", comment_path(comment), method: :delete, remote: true %>
       <% end %>
+   		<% if current_user %>
+				| <%= link_to "Reply", "", id: "reply-#{comment.id}" %>
+    	<% end %>
    	</small>
    	<p><%= render_with_hashtags_and_mentions(comment.body) %></p>
+   	<% if current_user %>
+   		<div id="new_comment-<%= comment.id %>" style="display: none">
+      	<%= render 'comments/form', comment: Comment.new, commentable: comment %>
+    	</div>
+    <% end %>
  	</div>
+<% end %>
+<% unless comment.comments.empty? %>
+  <ul class='js-comments'>
+    <%= render comment.comments %>
+  </ul>
 <% end %>
