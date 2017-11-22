@@ -1,6 +1,6 @@
 <% if @comment.valid? %>
- 	$('.js-comments').prepend("<%= j render(@comment) %>");
- 	$('.new-comment').html("<%= escape_javascript(render partial: 'comments/form', locals: { commentable: @comment.commentable, comment: @new_comment }) %>");
+ 	<%= @comment.commentable.class == Post %> ? $('.js-comments').prepend("<%= j render(@comment) %>") : $('#comment-<%= @comment.commentable.id %>').after("<ul><%= j render(@comment) %></ul>");
+ 	$('#new-comment-<%= @comment.id %>').html("<%= escape_javascript(render partial: 'comments/form', locals: { commentable: @comment.commentable, comment: @new_comment }) %>");
 <% else %>
  	$('.new-comment').html("<%= escape_javascript(render partial: 'comments/form', locals: { commentable: @comment.commentable, comment: @comment }) %>");
 	<%= ajax_flash('.flash') %>

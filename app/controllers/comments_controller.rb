@@ -10,43 +10,23 @@ class CommentsController < ApplicationController
     @comment.user = current_user
     @new_comment = Comment.new
 
-    # if @comment.save
-    #   flash[:notice] = "Comment saved successfully."
-    #   redirect_to [@comment.post.topic, @comment.post].compact
-    # else
-    #   flash[:alert] = "Comment failed to save."
-    #   redirect_to [@comment.post.topic, @comment.post].compact
-    # end
+    comment_save
+
     respond_to do |format|
-      format.html do
-        comment_save
-        redirect_to :back, fallback: root_path
-      end
-      format.js do
-        comment_save
-      end
+      format.html { redirect_to :back, fallback: root_path }
+      format.js
     end
   end
 
   def destroy
     @comment = Comment.find(params[:id])
+    @comments = @comment.find_nested_comments
 
-    # if @comment.destroy
-    #   flash[:notice] = "Comment was deleted successfully."
-    #   redirect_to [@comment.post.topic, @comment.post].compact
-    #  else
-    #   flash[:alert] = "Comment couldn't be deleted. Try again."
-    #   redirect_to [@comment.post.topic, @comment.post].compact
-    # end
+    comment_delete
 
     respond_to do |format|
-      format.html do
-        comment_delete
-        redirect_to :back, fallback: root_path
-      end
-      format.js do
-        comment_delete
-      end
+      format.html { redirect_to :back, fallback: root_path }
+      format.js
     end
   end
 

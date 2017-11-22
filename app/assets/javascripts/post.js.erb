@@ -1,4 +1,21 @@
 $(function(){
-    data = <%= User.connection.select_values("SELECT username FROM users").to_json.gsub("@", "") %>;
-    $('#post_body').atwho({at:"@", 'data':data});
+  data = $.parseJSON(gon.usernames);
+  $('#post_body').atwho({at:"@", 'data':data});
 });
+
+
+gon.comments.forEach(function(comment) {
+	$(document).ready(function() { 
+	  $('#reply-' + comment.id).click(function(e){
+	  	e.preventDefault();
+	  	$('#new_comment-' + comment.id).slideToggle();
+		});
+	});
+
+	$(document).ajaxComplete(function() { // doesn't work when creating a new comment and then clicking reply (no new comment form)
+	  $('#reply-' + comment.id).click(function(e){
+	  	e.preventDefault();
+	  	$('#new_comment-' + comment.id).slideToggle();
+		});
+	});
+})

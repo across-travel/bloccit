@@ -55,10 +55,11 @@ posts = Post.all
 
 # Create Comments
 100.times do
+post = posts.sample
 Comment.create!(
   user: users.sample,
-  post: posts.sample,
-  commentable: posts.sample,
+  post: post,
+  commentable: post,
   body: RandomData.random_paragraph
 )
 end

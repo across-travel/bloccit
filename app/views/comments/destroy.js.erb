@@ -1,5 +1,10 @@
 <% if @comment.destroyed? %>
  	$('#comment-<%= @comment.id %>').hide();
+ 	<% unless @comments.empty? %>
+		<% @comments.each do |comment| %>
+			$('#comment-<%= comment.id %>').hide();
+		<% end %>
+	<% end %>
  	$('.js-comments-count').html("<%= pluralize(@comment.user.comments.count, 'comment') %>");
 <% else %>
 	<%= ajax_flash('.flash') %>

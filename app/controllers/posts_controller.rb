@@ -2,12 +2,14 @@ class PostsController < ApplicationController
   before_action :require_sign_in, except: :show
   before_action :authorize_user, except: [:index, :show, :new, :create, :hashtags]
   before_action :topic_locate, only: [:new, :create]
+  before_action :usernames_load, only: [:show, :new, :edit]
 
   def index
     @posts = Post.where(topic: nil)
   end
 
   def show
+    gon.comments = Comment.where(post_id: params[:id])
     @post = Post.find(params[:id])
   end
 
@@ -66,6 +68,10 @@ class PostsController < ApplicationController
   end
 
   private
+
+  def usernames_load
+    gon.usernames = User.connection.select_values("SELECT username FROM users").to_json.gsub("@", "")
+  end
 
   def topic_locate
     @topic = Topic.find(params[:topic_id]) if params[:topic_id].present?

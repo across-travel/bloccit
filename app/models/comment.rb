@@ -15,6 +15,15 @@ class Comment < ApplicationRecord
 
   default_scope { order('updated_at DESC') }
 
+  def find_nested_comments(children_array = [])
+    children = Comment.where(commentable: self)
+    children_array += children
+    children.each do |child|
+        return child.find_nested_comments(children_array)
+    end
+    return children_array
+  end
+
   after_create do
     comment = Comment.find_by(id: self.id)
     hashtags = self.body.scan(/#\w+/)
