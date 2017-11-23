@@ -2,3 +2,11 @@ $(function(){
   data = $.parseJSON(gon.usernames);
   $('.comment_body').atwho({at:"@", 'data':data});
 });
+
+
+function new_comment(comment) {
+	$('#reply-' + comment).click(function(e){
+		e.preventDefault();
+		$('#new_comment-' + comment).slideToggle();
+	});
+}

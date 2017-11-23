@@ -11,11 +11,4 @@ gon.comments.forEach(function(comment) {
 	  	$('#new_comment-' + comment.id).slideToggle();
 		});
 	});
-
-	$(document).ajaxComplete(function() { // doesn't work when creating a new comment and then clicking reply (no new comment form)
-	  $('#reply-' + comment.id).click(function(e){
-	  	e.preventDefault();
-	  	$('#new_comment-' + comment.id).slideToggle();
-		});
-	});
 })
