@@ -11,11 +11,15 @@
     </section>
   </aside>
   <div class="col-md-8">
-    <h3><%= @title %></h3>
-    <% if @users.any? %>
-      <ul class="users follow">
-        <%= render @users %>
-      </ul>
+    <% unless @user.private? && (current_user != @user && @user.followers.include?(current_user) == false) %>
+      <h3><%= @title %></h3>
+      <% if @users.any? %>
+        <ul class="users follow">
+          <%= render @users %>
+        </ul>
+      <% end %>
+    <% else %>
+      <h3>Only confirmed followers have access to <%= @user.username %>'s posts and complete profile. </h3>
     <% end %>
   </div>
 </div>

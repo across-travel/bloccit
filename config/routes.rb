@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  post '/private', to: 'users#private'
+  post '/public', to: 'users#public'
+
   resources :topics do
     resources :posts, except: [:index]
   end

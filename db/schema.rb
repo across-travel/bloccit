@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171116160632) do
+ActiveRecord::Schema.define(version: 20171123161759) do
 
   create_table "comments", force: :cascade do |t|
     t.text "body"
@@ -106,6 +106,7 @@ ActiveRecord::Schema.define(version: 20171116160632) do
     t.integer "role"
     t.string "auth_token"
     t.string "username"
+    t.boolean "private", default: false
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 

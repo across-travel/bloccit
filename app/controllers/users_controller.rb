@@ -57,6 +57,26 @@ class UsersController < ApplicationController
     render 'show_subscriptions'
   end
 
+  def public
+    if current_user.update_attributes(private: false)
+      flash[:notice] = "Your account is visible to everyone."
+      redirect_to current_user
+    else
+      flash[:alert] = "There was an error making your account public. Please try again."
+      redirect_to current_user
+    end
+  end
+
+  def private
+    if current_user.update_attributes(private: true)
+      flash[:notice] = "Your account is only visible to you and your followers."
+      redirect_to current_user
+    else
+      flash[:alert] = "There was an error making your account private. Please try again."
+      redirect_to current_user
+    end
+  end
+
   private
 
   def single_collection(posts, votes, comments)

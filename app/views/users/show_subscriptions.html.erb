@@ -4,7 +4,7 @@
       <%= image_tag @user.avatar_url(128), class: 'media-object' %>
       <h1><%= @user.name %></h1>
       <span><%= link_to "View my profile", @user %></span> |
-      <span><b>Posts:</b> <%= @user.posts.count %></span>
+      <span><b>Subscriptions:</b> <%= @user.subscriptions.count %></span>
     </section>
     <section class="stats">
       <%= render 'stats' %>
@@ -14,11 +14,15 @@
     </section>
   </aside>
   <div class="col-md-8">
-    <h3><%= @title %></h3>
-    <% if @subscriptions.any? %>
-      <ul class="users subscription">
-        <%= render @subscriptions %>
-      </ul>
+    <% unless @user.private? && (current_user != @user && @user.followers.include?(current_user) == false) %>
+      <h3><%= @title %></h3>
+      <% if @subscriptions.any? %>
+        <ul class="users subscription">
+          <%= render @subscriptions %>
+        </ul>
+      <% end %>
+    <% else %>
+      <h3>Only confirmed followers have access to <%= @user.username %>'s posts and complete profile. </h3>
     <% end %>
   </div>
 </div>

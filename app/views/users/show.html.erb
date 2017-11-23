@@ -1,12 +1,10 @@
 <div class="row">
-  <div class="col-md-8">
-    <div class="media">
+  <aside class="col-md-4">
+    <section class="media user_info">
       <br />
       <% avatar_url = @user.avatar_url(128) %>
       <% if avatar_url %>
-        <div class="media-left">
           <%= image_tag avatar_url, class: 'media-object' %>
-        </div>
       <% end %>
       <div class="media-body">
         <h2 class="media-heading"><%= @user.name %></h2>
@@ -23,24 +21,39 @@
         <section class="stats">
           <%= render 'topics/subscription_stats' %>
         </section>
+        <section class="public">
+          <% if current_user == @user %>
+            <% if @user.private? %>
+              <%= button_to "Make your profile public", public_path, class: "btn btn-success" %>
+            <% else %>
+              <%= button_to "Make your profile private", private_path, class: "btn btn-primary" %>
+            <% end %>
+          <% end %>
+        </section>
       </div>
-    </div>
+    </section>
+  </aside>
+  
+  <div class="col-md-8">
+    <% unless @user.private? && (@user.followers.include?(current_user) == false && current_user != @user)%>
+      <h2>User activity</h2>
+      <% @collection.each do |collection| %>
+        <% if collection.instance_of? Post %>
+          <%= render partial: 'posts/post', locals: { post: collection } %>
+          <hr>
+        <% elsif collection.instance_of? Comment %>
+          <%= render partial: 'comments/comment', locals: { comment: collection } %>
+          <hr>
+        <% else %>
+          <% if collection.value == 1 %> 
+            <%= collection.user.name %> upvoted the following post <%= time_ago_in_words(collection.updated_at) %> ago
+          <% end %>
+          <%= render partial: 'posts/post', locals: { post: collection.post } %>
+          <hr>
+        <% end %>
+      <% end -%>    
+    <% else %>
+      <h3>Only confirmed followers have access to <%= @user.username %>'s posts and complete profile. </h3>
+    <% end %>
   </div>
 </div>
-
-<h2>User activity</h2>
-<% @collection.each do |collection| %>
-  <% if collection.instance_of? Post %>
-    <%= render partial: 'posts/post', locals: { post: collection } %>
-    <hr>
-  <% elsif collection.instance_of? Comment %>
-    <%= render partial: 'comments/comment', locals: { comment: collection } %>
-    <hr>
-  <% else %>
-    <% if collection.value == 1 %> 
-      <%= collection.user.name %> upvoted the following post <%= time_ago_in_words(collection.updated_at) %> ago
-    <% end %>
-    <%= render partial: 'posts/post', locals: { post: collection.post } %>
-    <hr>
-  <% end %>
-<% end -%>
