@@ -4,7 +4,11 @@ Recommendable.configure do |config|
   # Recommendable's connection to Redis.
   #
   # Default: localhost:6379/0
-  # config.redis = Redis.new(:host => 'localhost', :port => 6379, :db => 0)
+  if Rails.env.production?
+    config.redis = Redis.new(url: ENV["REDIS_PROVIDER"])
+  else
+    config.redis = Redis.new(:host => 'localhost', :port => 6379, :db => 0)
+  end
 
   # A prefix for all keys Recommendable uses.
   #
