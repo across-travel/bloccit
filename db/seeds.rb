@@ -1,7 +1,7 @@
 require 'random_data'
 
 # Create Users
-5.times do
+10.times do
   User.create!(
     name:     RandomData.random_name,
     username: "@" + RandomData.random_word,

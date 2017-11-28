@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  recommends :topics, :posts
+
   before_save { self.email = email.downcase if email.present? }
   before_save { self.role ||= :member }
 
