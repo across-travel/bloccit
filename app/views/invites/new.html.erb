@@ -1,0 +1,18 @@
+<h1>Invite a friend</h1>
+
+<div class="container deviseShared">
+  <div class="row">
+    <div class="col-md-8">
+			<%= form_for(@new_user, url: invites_path(@new_user)) do |f| %>
+				<div class="field">
+          <%= f.label :email, "Your Friend's Email" %>
+          <%= f.email_field :email, class: "form-control" %><br />
+        </div>
+
+        <div class="actions">
+          <%= f.submit "Submit", class: "btn btn-success" %>
+        </div>
+			<% end %>
+		</div>
+	</div>
+</div>

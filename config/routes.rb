@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :invites, only: [:new, :create]
+
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
 
