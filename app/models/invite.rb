@@ -21,12 +21,13 @@ class Invite < ApplicationRecord
     end
     unless self.phone.empty?
       account_sid = "AC06a7675f8463b81e262cc9ede3edf07f" # Your Account SID from www.twilio.com/console
-      auth_token = "ce9f97e1268faba17468b357d642a35f"   # Your Auth Token from www.twilio.com/console
+      auth_token = ENV['TWILIO_AUTH_TOKEN']   # Your Auth Token from www.twilio.com/console
 
+      binding.pry
       begin
           @client = Twilio::REST::Client.new account_sid, auth_token
           message = @client.messages.create(
-              body: "#{self.user.email} has invited you to join bloccit https://www.limitless-beach-68539.herokuapp.com/users/new",
+              body: "#{self.user.email} has invited you to join bloccit https://limitless-beach-68539.herokuapp.com/users/new",
               to: self.phone,    # Replace with your phone number
               from: "+441772367546")  # Replace with your Twilio number
       rescue Twilio::REST::TwilioError => e
