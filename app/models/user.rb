@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   before_create :generate_auth_token
 
+  has_many :invites, dependent: :destroy
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :votes, dependent: :destroy

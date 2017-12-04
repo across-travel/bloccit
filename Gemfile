@@ -44,6 +44,7 @@ gem 'gon'
 gem 'sidekiq'
 gem 'sidekiq-middleware'
 gem 'recommendable'
+gem 'twilio-ruby', '~> 5.5.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

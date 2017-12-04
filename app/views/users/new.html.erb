@@ -19,7 +19,7 @@
         <%= f.label :name, "Full Name" %>
         <%= f.text_field :name, autofocus: true, class: 'form-control', placeholder: "Enter name" %>
       <% end %>
-      <%= form_group_tag(@user.errors[:name]) do %>
+      <%= form_group_tag(@user.errors[:username]) do %>
         <%= f.label :username %>
         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
           <div class="input-group-addon">@</div>
