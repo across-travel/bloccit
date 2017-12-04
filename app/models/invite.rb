@@ -23,7 +23,6 @@ class Invite < ApplicationRecord
       account_sid = "AC06a7675f8463b81e262cc9ede3edf07f" # Your Account SID from www.twilio.com/console
       auth_token = ENV['TWILIO_AUTH_TOKEN']   # Your Auth Token from www.twilio.com/console
 
-      binding.pry
       begin
           @client = Twilio::REST::Client.new account_sid, auth_token
           message = @client.messages.create(
