@@ -7,8 +7,10 @@ class Comment < ApplicationRecord
   has_many :taggings, as: :taggable
   has_many :tags, through: :taggings
 
-  has_many :mentionings, as: :mentionable
-  has_many :mentions, through: :mentionings
+  has_many :mentions, as: :mentionable
+
+  # has_many :mentionings, as: :mentionable
+  # has_many :mentions, through: :mentionings
 
   validates :body, length: { minimum: 5 }, presence: true
   validates :user, presence: true

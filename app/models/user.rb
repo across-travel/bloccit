@@ -21,6 +21,7 @@ class User < ApplicationRecord
 
   has_many :subscriptions, dependent: :destroy
   has_many :topics, through: :subscriptions
+  has_many :topics
 
   has_many :following, through: :active_relationships, source: :followed
   has_many :followers, through: :passive_relationships, source: :follower

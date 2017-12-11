@@ -30,6 +30,20 @@
             <% end %>
           <% end %>
         </section>
+        <% if current_user == @user && @similar_raters.empty? == false %>
+          <section class="similar-users">
+            <h4>Users you may know</h4>
+            <% @similar_raters.each do |user| %>
+              <hr />
+              <%= image_tag user.avatar_url(40), class: 'media-object pull-left' %>
+              <div class="pull-right">
+                <%= render partial: 'follow_form', locals: { user: user }, class: 'pull-right' %>
+              </div>
+              <h6><%= link_to user.name, user %></h6>
+              <h6><%= user.username %></h6>
+            <% end %>
+          </section>
+        <% end -%>
       </div>
     </section>
   </aside>

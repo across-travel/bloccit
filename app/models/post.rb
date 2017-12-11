@@ -7,8 +7,10 @@ class Post < ApplicationRecord
   has_many :taggings, as: :taggable
   has_many :tags, through: :taggings
 
-  has_many :mentionings, as: :mentionable
-  has_many :mentions, through: :mentionings
+  has_many :mentions, as: :mentionable
+
+  # has_many :mentionings, as: :mentionable
+  # has_many :mentions, through: :mentionings
 
   default_scope { order('rank DESC') }
 
@@ -61,8 +63,8 @@ class Post < ApplicationRecord
     post = Post.find_by(id: self.id)
     mentions = self.body.scan(/@\w+/)
     mentions.uniq.map do |mention|
-      username = Mention.find_or_create_by(username: mention)
-      post.mentions << username if username.persisted?
+      self.mentions.find_or_create_by(username: mention)
+      # post.mentions << username if username.persisted?
     end
   end
 
@@ -71,8 +73,8 @@ class Post < ApplicationRecord
     post.mentions.clear
     mentions = self.body.scan(/@\w+/)
     mentions.uniq.map do |mention|
-      username = Mention.find_or_create_by(username: mention)
-      post.mentions << username if username.persisted?
+      self.mentions.find_or_create_by(username: mention)
+      # post.mentions << username if username.persisted?
     end
   end
 end

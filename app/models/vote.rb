@@ -5,6 +5,19 @@ class Vote < ApplicationRecord
 
   validates :value, inclusion: { in: [-1, 1], message: "%{value} is not a valid vote." }, presence: true
 
+  include StreamRails::Activity
+  as_activity
+
+  def activity_notify
+    if self.value == 1
+      [StreamRails.feed_manager.get_notification_feed(self.post.user_id)]
+    end
+  end
+
+  def activity_object
+    self.post
+  end
+
   after_create do
     self.user.like(self.post)
   end

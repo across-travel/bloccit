@@ -12,4 +12,21 @@ class Subscription < ApplicationRecord
   after_destroy do
     self.user.unlike(self.topic)
   end
+
+  include StreamRails::Activity
+  as_activity
+
+  def activity_notify
+    if self.topic.user.admin?
+      [StreamRails.feed_manager.get_notification_feed(self.topic.user.id)]
+    end
+  end
+
+  def activity_object
+    self.topic.user
+  end
+
+  def activity_actor
+    self.user
+  end
 end

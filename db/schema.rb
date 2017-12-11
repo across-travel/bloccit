@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171204154739) do
+ActiveRecord::Schema.define(version: 20171210173509) do
 
   create_table "comments", force: :cascade do |t|
     t.text "body"
@@ -34,20 +34,13 @@ ActiveRecord::Schema.define(version: 20171204154739) do
     t.index ["user_id"], name: "index_invites_on_user_id"
   end
 
-  create_table "mentionings", force: :cascade do |t|
-    t.integer "mention_id"
+  create_table "mentions", force: :cascade do |t|
+    t.string "username"
     t.string "mentionable_type"
     t.integer "mentionable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["mention_id"], name: "index_mentionings_on_mention_id"
-    t.index ["mentionable_type", "mentionable_id"], name: "index_mentionings_on_mentionable_type_and_mentionable_id"
-  end
-
-  create_table "mentions", force: :cascade do |t|
-    t.string "username"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.index ["mentionable_type", "mentionable_id"], name: "index_mentions_on_mentionable_type_and_mentionable_id"
     t.index ["username"], name: "index_mentions_on_username", unique: true
   end
 
@@ -105,6 +98,8 @@ ActiveRecord::Schema.define(version: 20171204154739) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_topics_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

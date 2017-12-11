@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  include UsersHelper
   before_action :require_sign_in, only: [:following, :followers]
 
   def index
@@ -14,7 +15,7 @@ class UsersController < ApplicationController
     @posts = @user.posts.visible_to(current_user)
     @votes = @user.votes.where(value: 1)
     @comments = @user.comments
-
+    @similar_raters = find_similar_users(@user.similar_raters)[0..2]
     @collection = single_collection(@posts, @votes, @comments)
   end
 

@@ -2,6 +2,7 @@ class CreateMentions < ActiveRecord::Migration[5.1]
   def change
     create_table :mentions do |t|
       t.string :username
+      t.references :mentionable, polymorphic: true, index: true
 
       t.timestamps
     end
