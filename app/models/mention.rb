@@ -25,7 +25,7 @@ class Mention < ApplicationRecord
   end
 
   def activity_object
-    User.find_by(username: self.username)
+    self.mentionable
   end
 
   def activity_actor

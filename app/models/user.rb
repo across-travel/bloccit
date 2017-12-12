@@ -84,4 +84,18 @@ class User < ApplicationRecord
   def subscribed_to?(topic)
     topics.include?(topic)
   end
+
+  def notifications
+    enricher = StreamRails::Enrich.new
+    feed = StreamRails.feed_manager.get_notification_feed(self.id)
+    results = feed.get()['results']
+    activities = enricher.enrich_activities(results)
+  end
+
+  def feeds
+    enricher = StreamRails::Enrich.new
+    feed = StreamRails.feed_manager.get_news_feeds(self.id)[:flat]
+    results = feed.get()['results']
+    activities = enricher.enrich_activities(results)
+  end
 end

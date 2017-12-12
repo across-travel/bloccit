@@ -13,6 +13,13 @@ class Subscription < ApplicationRecord
     self.user.unlike(self.topic)
   end
 
+  before_destroy do
+    true unless self.topic.user == self.user
+    errors.add(:base, "Cannot delete as you are the admin")
+    false
+    throw(:abort)
+  end
+
   include StreamRails::Activity
   as_activity
 
@@ -23,7 +30,7 @@ class Subscription < ApplicationRecord
   end
 
   def activity_object
-    self.topic.user
+    self.topic
   end
 
   def activity_actor

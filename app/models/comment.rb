@@ -17,6 +17,21 @@ class Comment < ApplicationRecord
 
   default_scope { order('updated_at DESC') }
 
+  include StreamRails::Activity
+  as_activity
+
+  def activity_notify
+    [StreamRails.feed_manager.get_notification_feed(self.post.user.id)]
+  end
+
+  def activity_object
+    self.post
+  end
+
+  def activity_actor
+    self.user
+  end
+
   def find_nested_comments(children_array = [])
     children = Comment.where(commentable: self)
     children_array += children

@@ -7,6 +7,10 @@ class Topic < ApplicationRecord
 
   validate :check_role
 
+  after_save do
+    self.user.subscribe(self)
+  end
+
   def check_role
     errors.add(:base, 'User is not an admin') unless self.user.role == 'admin'
   end

@@ -20,6 +20,17 @@ class Post < ApplicationRecord
   validates :body, length: { minimum: 20 }, presence: true
   validates :user, presence: true
 
+  include StreamRails::Activity
+  as_activity
+
+  def activity_object
+    self
+  end
+
+  def activity_actor
+    self.user
+  end
+
   def up_votes
     votes.where(value: 1).count
   end
