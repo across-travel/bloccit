@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Comment, type: :model do
-  let(:topic) { create(:topic) }
-  let(:user) { create(:user) }
+  let(:topic) { create(:topic, user: user) }
+  let(:user) { create(:user, role: :admin) }
   let(:post) { create(:post) }
 	let(:comment) { Comment.create!(body: 'Comment Body', post: post, user: user, commentable: post) }
 

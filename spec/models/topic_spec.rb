@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Topic, type: :model do
-  let(:topic) { create(:topic) }
+  let(:topic) { create(:topic, user: user) }
+  let(:user) { create(:user, role: :admin) }
 
   describe "attributes" do
     it "has name, description, and public attributes" do
@@ -17,8 +18,8 @@ RSpec.describe Topic, type: :model do
 
   describe "scopes" do
     before do
-      @public_topic = Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph)
-      @private_topic = Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph, public: false)
+      @public_topic = Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph, user: user)
+      @private_topic = Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph, public: false, user: user)
     end
 
     describe "visible_to(user)" do

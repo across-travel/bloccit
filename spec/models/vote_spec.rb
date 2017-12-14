@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Vote, type: :model do
-  let(:topic) { create(:topic) }
-  let(:user) { create(:user) }
+  let(:topic) { create(:topic, user: user) }
+  let(:user) { create(:user, role: :admin) }
   let(:post) { create(:post) }
   let(:vote) { Vote.create!(value: 1, post: post, user: user) }
 

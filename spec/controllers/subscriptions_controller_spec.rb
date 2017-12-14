@@ -3,7 +3,8 @@ include SessionsHelper
 
 RSpec.describe SubscriptionsController, type: :controller do
   let(:subscriber) { create(:user) }
-  let(:topic) { create(:topic) }
+  let(:topic) { create(:topic, user: user) }
+  let(:user) { create(:user, role: :admin) }
   let(:subscription) { create(:subscription, topic_id: topic.id, user_id: subscriber.id) }
 
   describe "not signed in" do

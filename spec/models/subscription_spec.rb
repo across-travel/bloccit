@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Subscription, type: :model do
   let(:subscriber) { create(:user) }
-  let(:topic) { create(:topic) }
+  let(:topic) { create(:topic, user: user) }
+  let(:user) { create(:user, role: :admin) }
   let(:subscription) { create(:subscription, user: subscriber, topic: topic) }
 
   it { is_expected.to belong_to(:topic) }

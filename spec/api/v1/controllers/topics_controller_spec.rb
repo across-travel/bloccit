@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::TopicsController, type: :controller do
   let(:my_user) { create(:user) }
-  let(:my_topic) { create(:topic) }
+  let(:my_topic) { create(:topic, user: my_user ) }
 
   context "unauthenticated user" do
     it "GET index returns http success" do
@@ -70,7 +70,7 @@ RSpec.describe Api::V1::TopicsController, type: :controller do
     end
 
     describe "PUT update" do
-      before { put :update, params: {id: my_topic.id, topic: {name: @new_topic.name, description: @new_topic.description}} }
+      before { put :update, params: {id: my_topic.id, topic: {name: @new_topic.name, description: @new_topic.description, user: my_user}} }
 
       it "returns http success" do
         expect(response).to have_http_status(:success)
@@ -89,7 +89,7 @@ RSpec.describe Api::V1::TopicsController, type: :controller do
     end
 
     describe "POST create" do
-      before { post :create, params: {topic: {name: @new_topic.name, description: @new_topic.description} }}
+      before { post :create, params: {topic: {name: @new_topic.name, description: @new_topic.description, user: my_user} }}
 
       it "returns http success" do
         expect(response).to have_http_status(:success)
@@ -107,7 +107,9 @@ RSpec.describe Api::V1::TopicsController, type: :controller do
     end
 
     describe "DELETE destroy" do
-      before { delete :destroy, params: {id: my_topic.id} }
+      before do
+        delete :destroy, params: {id: my_topic.id}
+      end
 
       it "returns http success" do
         expect(response).to have_http_status(:success)

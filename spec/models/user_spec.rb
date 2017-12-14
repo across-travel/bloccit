@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  let(:topic) { create(:topic, user: user) }
   let(:user) { create(:user) }
-  let(:topic) { create(:topic) }
-  let(:second_user) { create(:user) }
+  let(:second_user) { create(:user, role: :admin) }
 
   it { is_expected.to have_many(:posts) }
   it { is_expected.to have_many(:comments) }
@@ -132,15 +132,16 @@ RSpec.describe User, type: :model do
   end
 
   describe "subscribing" do
+
     it "should subsribe to a topic" do
-      user.subscribe(topic)
-      expect(user.subscribed_to?(topic)).to be_truthy
+      second_user.subscribe(topic)
+      expect(second_user.subscribed_to?(topic)).to be_truthy
     end
 
     it "should unsubsribe to a topic" do
-      user.subscribe(topic)
-      user.unsubscribe(topic)
-      expect(user.subscribed_to?(topic)).to be_falsey
+      second_user.subscribe(topic)
+      second_user.unsubscribe(topic)
+      expect(second_user.subscribed_to?(topic)).to be_falsey
     end
   end
 

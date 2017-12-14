@@ -6,7 +6,6 @@ class Mention < ApplicationRecord
   # has_many :posts, through: :mentionings, source: :mentionable, source_type: :Post
 
   validates :username, presence: true
-  validates :username, uniqueness: true
 
   validate :check_username
 

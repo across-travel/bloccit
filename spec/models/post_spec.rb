@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
-  let(:topic) { create(:topic) }
-  let(:user) { create(:user) }
+  let(:topic) { create(:topic, user: user) }
+  let(:user) { create(:user, role: :admin) }
   let(:post) { create(:post) }
 
   it { is_expected.to have_many(:taggings) }

@@ -2,16 +2,9 @@
 	<h1>Notifications</h1>
 	<div class="row">
   	<div class="col-md-8">
-			<% @notifications.each do |notification| %>
-				<div class="media">
-		      <div class="media-body">
-						<% if notification.verb['verb'] == 'Subscription' %>
-		        	
-						<% end -%>
-					</div>
-					<hr>
-				</div>
-			<% end %>
+			<% for activity in @activities %>
+        <%= render_activities activity %>
+      <% end %>
 		</div>
 	</div>
 </div>

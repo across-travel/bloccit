@@ -74,7 +74,7 @@ class Post < ApplicationRecord
     post = Post.find_by(id: self.id)
     mentions = self.body.scan(/@\w+/)
     mentions.uniq.map do |mention|
-      self.mentions.find_or_create_by(username: mention)
+      self.mentions.find_or_create_by(username: mention, mentionable: self)
       # post.mentions << username if username.persisted?
     end
   end
@@ -84,7 +84,7 @@ class Post < ApplicationRecord
     post.mentions.clear
     mentions = self.body.scan(/@\w+/)
     mentions.uniq.map do |mention|
-      self.mentions.find_or_create_by(username: mention)
+      self.mentions.find_or_create_by(username: mention, mentionable: self)
       # post.mentions << username if username.persisted?
     end
   end

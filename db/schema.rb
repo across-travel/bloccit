@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20171210173509) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["mentionable_type", "mentionable_id"], name: "index_mentions_on_mentionable_type_and_mentionable_id"
-    t.index ["username"], name: "index_mentions_on_username", unique: true
+    t.index ["username"], name: "index_mentions_on_username"
   end
 
   create_table "posts", force: :cascade do |t|

@@ -14,10 +14,10 @@ class Subscription < ApplicationRecord
   end
 
   before_destroy do
-    true unless self.topic.user == self.user
-    errors.add(:base, "Cannot delete as you are the admin")
-    false
-    throw(:abort)
+    if self.topic.user == self.user && !self.destroyed_by_association
+      errors.add(:base, "Cannot delete as you are the admin")
+      throw(:abort)
+    end
   end
 
   include StreamRails::Activity

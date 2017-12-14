@@ -21,7 +21,6 @@ class User < ApplicationRecord
 
   has_many :subscriptions, dependent: :destroy
   has_many :topics, through: :subscriptions
-  has_many :topics
 
   has_many :following, through: :active_relationships, source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
@@ -83,13 +82,6 @@ class User < ApplicationRecord
 
   def subscribed_to?(topic)
     topics.include?(topic)
-  end
-
-  def notifications
-    enricher = StreamRails::Enrich.new
-    feed = StreamRails.feed_manager.get_notification_feed(self.id)
-    results = feed.get()['results']
-    activities = enricher.enrich_activities(results)
   end
 
   def feeds

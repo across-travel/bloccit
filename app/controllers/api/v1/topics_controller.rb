@@ -24,6 +24,7 @@ class Api::V1::TopicsController < Api::V1::BaseController
 
   def create
     topic = Topic.new(topic_params)
+    topic.user = @current_user
 
     if topic.valid?
       topic.save!

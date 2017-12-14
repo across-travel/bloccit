@@ -3,6 +3,9 @@ class NotificationsController < ApplicationController
 
   def notifications
     @user = current_user
-    @notifications = @user.notifications
+    enricher = StreamRails::Enrich.new
+    feed = StreamRails.feed_manager.get_notification_feed(@user.id)
+    results = feed.get()['results']
+    @activities = enricher.enrich_activities(results)
   end
 end

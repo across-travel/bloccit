@@ -65,8 +65,8 @@ class Comment < ApplicationRecord
     comment = Comment.find_by(id: self.id)
     mentions = self.body.scan(/@\w+/)
     mentions.uniq.map do |mention|
-      username = Mention.find_or_create_by(username: mention)
-      comment.mentions << username if username.persisted?
+      self.mentions.find_or_create_by(username: mention, mentionable: self)
+      # comment.mentions << username if username.persisted?
     end
   end
 
@@ -76,8 +76,8 @@ class Comment < ApplicationRecord
     comment.mentions.clear
     mentions = self.body.scan(/@\w+/)
     mentions.uniq.map do |mention|
-      username = Mention.find_or_create_by(username: mention)
-      comment.mentions << username if username.persisted?
+      self.mentions.find_or_create_by(username: mention, mentionable: self)
+      # comment.mentions << username if username.persisted?
     end
   end
 end
