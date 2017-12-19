@@ -1,0 +1,3 @@
+<% activity['activities'].each do |acs| %>
+	<%= link_to acs['actor'].username, acs['actor'] %> has subscribed to <%= link_to acs['object'].name, acs['object'] %><hr>
+<% end %>

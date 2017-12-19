@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  get 'notifications/notifications'
+  get 'notifications', to: 'notifications#notifications'
 
   resources :invites, only: [:new, :create]
 

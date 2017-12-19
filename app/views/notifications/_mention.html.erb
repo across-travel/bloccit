@@ -1,0 +1,9 @@
+<% activity['activities'].each do |acs| %>
+	<% if acs['object'].is_a? Post %>
+		<%= link_to acs['actor'].username, acs['actor'] %> has mentioned you in <%= link_to acs['object'].title, acs['object']%><hr>
+	<% elsif acs['object'].is_a? Comment %>
+		<%= link_to acs['actor'].username, acs['actor'] %> has mentioned you in <%= link_to acs['object'].post.title, acs['object'].post %><hr>
+	<% else %>
+		<%= link_to acs['actor'].username, acs['actor'] %> has mentioned you in <%= acs['object'] %><hr>
+	<% end %>
+<% end %>

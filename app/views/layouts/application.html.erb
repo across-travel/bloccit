@@ -18,6 +18,7 @@
         <li><%= link_to "Users", users_path %></li>
         <li><%= link_to "Posts", posts_path %></li>
         <% if current_user %>
+          <li><%= link_to "Notifications (#{StreamRails.feed_manager.get_notification_feed(current_user.id).get()['unread']})", notifications_path %></li>
           <li><%= link_to "Invite", new_invite_path %></li>
         <% end -%>
 
