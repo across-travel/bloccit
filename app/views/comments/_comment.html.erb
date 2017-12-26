@@ -4,7 +4,7 @@
    	<small>
    		<% if comment.commentable.instance_of? Post %>
 	   		<% path = comment.commentable.topic ? topic_post_path(comment.commentable.topic, comment.commentable) : post_path(comment.commentable) %>
-	     	<%= comment.user.name %> commented on <%= link_to comment.commentable.title, path %> <%= time_ago_in_words(comment.created_at) %> ago
+	     	<%= link_to comment.user.name, comment.user %> commented on <%= link_to comment.commentable.title, path %> <%= time_ago_in_words(comment.created_at) %> ago
 	    <% else %>
 	    	<% post = find_post_in_commentable(comment.commentable) %>
 	    	<% path = post.topic ? topic_post_path(post.topic, post) : post_path(post) %>

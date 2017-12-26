@@ -1,0 +1,12 @@
+<div class="media">
+  <h4 class="media-description">
+    <%= link_to image_tag(activity['actor'].avatar_url(35)), activity['actor'] %> 
+    <span class="user-name"><%= link_to activity['actor'].name, activity['actor'] %></span>
+    <span class="atusername"><%= link_to activity['actor'].username, activity['actor'] %></span> -
+    <span class="time-ago"><%= time_ago_in_words(activity['object'].created_at) %></span>
+  </h4>
+  <div class="media-body">
+    <h4>is following <%= link_to activity['object'].username %></h4>
+  </div>
+</div>
+<hr>

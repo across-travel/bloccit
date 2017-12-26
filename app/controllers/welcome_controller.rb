@@ -1,6 +1,6 @@
 class WelcomeController < ApplicationController
   def index
-    redirect_to user_path(current_user) if current_user
+    redirect_to news_feed_path if current_user
   end
 
   def about

@@ -1,0 +1,34 @@
+<div class="row">
+	<aside class="col-md-4">
+	  <section class="media user_info">
+	    <br />
+	    <% avatar_url = current_user.avatar_url(128) %>
+	    <% if avatar_url %>
+	        <%= image_tag avatar_url, class: 'media-object' %>
+	    <% end %>
+	    <div class="media-body">
+	      <h2 class="media-heading"><%= current_user.name %></h2>
+	      <%= render partial: 'users/follow_form', locals: { user: current_user } %>
+	      <small>
+	        <%= pluralize(current_user.posts.count, 'post') %>,
+	        <div class='js-comments-count'>
+	          <%= pluralize(current_user.comments.count, 'comment') %>    
+	        </div>
+	      </small>
+	      <section class="stats">
+	        <%= render 'users/stats' %>
+	      </section>
+	      <section class="stats">
+	        <%= render 'topics/subscription_stats' %>
+	      </section>
+	    </div>
+	  </section>
+	</aside>
+
+	<div class="col-md-8">
+		<div class="page-header"><h2><%= current_user.name %>'s feed</h2></div>
+		<% for activity in @activities %>
+		  <%= render_activity activity, partial_root: "flat" %>
+		<% end %>
+	</div>
+</div>

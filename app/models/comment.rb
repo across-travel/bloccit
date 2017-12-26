@@ -25,7 +25,7 @@ class Comment < ApplicationRecord
   end
 
   def activity_object
-    self.post
+    self
   end
 
   def activity_actor

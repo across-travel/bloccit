@@ -1,0 +1,19 @@
+<div class="media">
+  <h4 class="media-description">
+    <%= link_to image_tag(activity['object'].user.avatar_url(35)), activity['object'].user %> 
+    <span class="user-name"><%= link_to activity['object'].user.name, activity['object'].user %></span>
+    <span class="atusername"><%= link_to activity['object'].user.username, activity['object'].user %></span> -
+    <span class="time-ago"><%= time_ago_in_words(activity['object'].created_at) %></span>
+  </h4>
+  <%= render partial: 'votes/voting', locals: { post: activity['object'] } %>
+  <div class="media-body">
+    <h5 class="media-heading">
+      <%= link_to activity['object'].title, post_path(activity['object']) %>
+    </h5>
+    <small>
+      <%= truncate(activity['object'].body, length: 150, :separator => ' ') %><br>
+      <%= activity['object'].comments.count %> Comments
+    </small>
+  </div>
+</div>
+<hr>

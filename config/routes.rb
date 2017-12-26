@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
 
-  get 'notifications', to: 'notifications#notifications'
+  scope path: '/feed', controller: :feeds do
+    get 'news_feed', to: :news_feed
+    get 'notifications', to: :notifications
+  end
 
   resources :invites, only: [:new, :create]
 
