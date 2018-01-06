@@ -7,10 +7,12 @@ class Subscription < ApplicationRecord
 
   after_create do
     self.user.like(self.topic)
+    [StreamRails.feed_manager.get_feed("timeline", self.user.id).follow('topic', self.topic.id)]
   end
 
   after_destroy do
     self.user.unlike(self.topic)
+    [StreamRails.feed_manager.get_feed("timeline", self.user.id).unfollow('topic', self.topic.id)]
   end
 
   before_destroy do

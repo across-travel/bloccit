@@ -6,14 +6,14 @@
     <span class="atusername"><%= link_to activity['object'].user.username, activity['object'].user %></span> -
     <span class="time-ago"><%= time_ago_in_words(activity['object'].created_at) %></span>
   </h4>
-  <%= render partial: 'votes/voting', locals: { post: activity['object'] } %>
+  <%= render partial: 'votes/voting', locals: { post: activity['object'].post } %>
   <div class="media-body">
     <h5 class="media-heading">
-      <%= link_to activity['object'].title, post_path(activity['object']) %>
+      <%= link_to activity['object'].post.title, post_path(activity['object'].post) %>
     </h5>
     <small>
-      <%= truncate(activity['object'].body, length: 150, :separator => ' ') %><br>
-      <%= activity['object'].comments.count %> Comments
+      <%= truncate(activity['object'].post.body, length: 150, :separator => ' ') %><br>
+      <%= activity['object'].post.comments.count %> Comments
     </small>
   </div>
 </div>

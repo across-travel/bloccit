@@ -50,6 +50,21 @@ class Post < ApplicationRecord
   end
 
   after_create do
+    unless self.topic.nil?
+      feed = StreamRails.feed_manager.get_feed("topic", self.topic.id)
+      activity_data = {actor: "User:#{self.user.id}", verb: "post", object: "Post:#{self.id}", target: "Topic:#{self.topic.id}", foreign_id: "post:#{self.id}"}
+      activity_response = feed.add_activity(activity_data)
+    end
+  end
+
+  before_destroy do
+    unless self.topic.nil?
+      feed = StreamRails.feed_manager.get_feed("topic", self.topic.id)
+      feed.remove_activity("post:#{self.id}", foreign_id=true)
+    end
+  end
+
+  after_create do
     post = Post.find_by(id: self.id)
     hashtags = self.body.scan(/#\w+/)
     hashtags.uniq.map do |hashtag|

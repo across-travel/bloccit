@@ -53,17 +53,16 @@
       <h2>User activity</h2>
       <% @collection.each do |collection| %>
         <% if collection.instance_of? Post %>
-          <%= render partial: 'posts/post', locals: { post: collection } %>
           <hr>
+          <%= render partial: 'posts/post', locals: { post: collection } %>
         <% elsif collection.instance_of? Comment %>
           <%= render partial: 'comments/comment', locals: { comment: collection } %>
-          <hr>
         <% else %>
           <% if collection.value == 1 %> 
+            <hr>
             <%= collection.user.name %> upvoted the following post <%= time_ago_in_words(collection.updated_at) %> ago
           <% end %>
           <%= render partial: 'posts/post', locals: { post: collection.post } %>
-          <hr>
         <% end %>
       <% end -%>    
     <% else %>

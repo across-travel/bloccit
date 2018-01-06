@@ -15,7 +15,7 @@ class Vote < ApplicationRecord
   end
 
   def activity_object
-    self.post
+    self
   end
 
   after_create do
