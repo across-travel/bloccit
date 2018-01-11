@@ -1,4 +1,13 @@
 class Topic < ApplicationRecord
+  searchkick word_start: [:name, :description]
+
+  def search_data
+    {
+      name: name,
+      description: description
+    }
+  end
+
   belongs_to :user
   has_many :posts, dependent: :destroy
 

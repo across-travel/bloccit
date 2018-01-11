@@ -2,10 +2,6 @@ class UsersController < ApplicationController
   include UsersHelper
   before_action :require_sign_in, only: [:following, :followers]
 
-  def index
-    @users = User.all
-  end
-
   def new
     @user = User.new
   end

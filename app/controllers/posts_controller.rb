@@ -1,12 +1,8 @@
 class PostsController < ApplicationController
   before_action :require_sign_in, except: :show
-  before_action :authorize_user, except: [:index, :show, :new, :create, :hashtags]
+  before_action :authorize_user, except: [:show, :new, :create, :hashtags]
   before_action :topic_locate, only: [:new, :create]
   before_action :usernames_load, only: [:show, :new, :edit]
-
-  def index
-    @posts = Post.where(topic: nil)
-  end
 
   def show
     gon.comments = Comment.where(post_id: params[:id])

@@ -5,6 +5,12 @@ Rails.application.routes.draw do
     get 'notifications', to: :notifications
   end
 
+  resources :search, only: [:index] do
+    collection do
+      get :autocomplete
+    end
+  end
+
   resources :invites, only: [:new, :create]
 
   require 'sidekiq/web'

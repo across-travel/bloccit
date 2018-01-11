@@ -1,4 +1,13 @@
 class User < ApplicationRecord
+  searchkick word_start: [:username, :name]
+
+  def search_data
+    {
+      username: username,
+      name: name
+    }
+  end
+
   recommends :topics, :posts
 
   before_save { self.email = email.downcase if email.present? }

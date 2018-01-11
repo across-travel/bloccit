@@ -1,10 +1,6 @@
 class TopicsController < ApplicationController
-  before_action :require_sign_in, except: [:index, :show]
-  before_action :authorize_user, except: [:index, :show]
-
-  def index
-    @topics = Topic.visible_to(current_user)
-  end
+  before_action :require_sign_in, except: [:show]
+  before_action :authorize_user, except: [:show]
 
   def show
     @topic = Topic.find(params[:id])
@@ -54,7 +50,7 @@ class TopicsController < ApplicationController
 
     if @topic.destroy
       flash[:notice] = "\"#{@topic.name}\" was deleted successfully."
-      redirect_to action: :index
+      redirect_to news_feed_path
     else
       flash.now[:alert] = "There was an error deleting the topic."
       render :show

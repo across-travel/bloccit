@@ -1,0 +1,50 @@
+<%= render partial: "search/search" %>
+
+<% unless @posts.nil? %>
+  <h1>Posts</h1>
+
+  <% @posts.each do |post| %>
+    <%= render post %>
+  <% end %>
+<% end %>
+
+<% unless @users.nil? %>
+  <h1>Users</h1>
+
+  <div class="row">
+    <div class="col-md-8">
+      <% @users.each do |user| %>
+        <div class="media">
+          <div class="media-body">
+            <h4 class="media-heading">
+              <%= image_tag user.avatar_url(40), class: 'media-object pull-left' %>
+              <%= link_to user.name, user %>
+            </h4>
+          </div>
+        </div>
+        <hr>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<% unless @topics.nil? %>
+  <h1>Topics</h1>
+   
+  <div class="row">
+    <div class="col-md-8">
+      <% @topics.each do |topic| %>
+        <div class="media">
+          <div class="media-body">
+            <h4 class="media-heading">
+              <%= link_to topic.name, topic %>
+            </h4>
+            <small>
+              <%= topic.description %>
+            </small>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

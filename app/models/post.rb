@@ -1,4 +1,13 @@
 class Post < ApplicationRecord
+  searchkick word_start: [:title, :body]
+
+  def search_data
+    {
+      title: title,
+      body: body
+    }
+  end
+
   belongs_to :topic, optional: true
   belongs_to :user
 	has_many :comments, as: :commentable, dependent: :destroy
