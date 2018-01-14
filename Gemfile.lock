@@ -75,6 +75,8 @@ GEM
     factory_bot_rails (4.8.2)
       factory_bot (~> 4.8.2)
       railties (>= 3.0.0)
+    faker (1.8.7)
+      i18n (>= 0.7)
     faraday (0.13.1)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.18)
@@ -272,6 +274,7 @@ DEPENDENCIES
   byebug
   coffee-rails (~> 4.2)
   factory_bot_rails (~> 4.0)
+  faker
   figaro (= 1.0)
   gon
   jbuilder (~> 2.5)

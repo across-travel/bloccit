@@ -54,6 +54,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.6'
   gem 'rails-controller-testing'
   gem 'shoulda'
+  gem 'faker'
 end
 
 group :production do

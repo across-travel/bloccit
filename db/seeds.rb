@@ -3,10 +3,10 @@ require 'random_data'
 # Create Users
 10.times do
   User.create!(
-    name:     RandomData.random_name,
-    username: "@" + RandomData.random_word,
-    email:    RandomData.random_email,
-    password: RandomData.random_sentence
+    name:     Faker::Name.name,
+    username: "@" + Faker::Internet.user_name,
+    email:    Faker::Internet.email,
+    password: 'helloworld'
   )
 end
 
@@ -32,8 +32,8 @@ users = User.all
 # Create Topics
 15.times do
   Topic.create!(
-    name:         RandomData.random_sentence,
-    description:  RandomData.random_paragraph,
+    name:         Faker::Name.title,
+    description:  Faker::Lorem.sentence(3),
     user: admin
   )
 end
@@ -44,8 +44,8 @@ topics = Topic.all
 post = Post.create!(
   user:   users.sample,
   topic: topics.sample,
-  title:  RandomData.random_sentence,
-  body:   RandomData.random_paragraph
+  title:  Faker::Name.title,
+  body:   Faker::Lorem.paragraph
 )
 
 post.update_attribute(:created_at, rand(10.minutes .. 1.year).ago)

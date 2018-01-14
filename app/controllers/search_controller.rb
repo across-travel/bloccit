@@ -1,6 +1,6 @@
 class SearchController < ApplicationController
   def index
-    search = params[:term].present? ? params[:term] : nil
+    search = params[:query].present? ? params[:query] : nil
     @users = if search
       User.search(search, fields: [:name, :username], match: :word_start)
     end
@@ -15,6 +15,10 @@ class SearchController < ApplicationController
   end
 
   def autocomplete
-    render json: Searchkick.search(params[:term], index_name: [User, Topic, Post], match: :word_start)
+    user_json = User.search(params[:query], fields: [:name, :username], match: :word_start, limit: 2)
+    # topic_json = Topic.search(params[:query], fields: [:name, :description], match: :word_start, limit: 2)
+    # post_json = Post.search(params[:query], fields: [:title, :body], match: :word_start, limit: 2)
+
+    render json: user_json
   end
 end
