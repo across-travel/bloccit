@@ -3,11 +3,11 @@ ready = function() {
     var engine = new Bloodhound({
         datumTokenizer: function(d) {
             console.log(d);
-            return Bloodhound.tokenizers.whitespace(d.title);
+            return Bloodhound.tokenizers.whitespace('value');
         },
         queryTokenizer: Bloodhound.tokenizers.whitespace,
         remote: {
-            url: '../search/autocomplete?query=%QUERY',
+            url: '/search/autocomplete?query=%QUERY',
             wildcard: '%QUERY'
         }
     });
@@ -20,10 +20,9 @@ ready = function() {
 
     $('.typeahead').typeahead(null, {
         name: 'engine',
-        displayKey: 'title',
+        displayKey: 'store',
         source: engine.ttAdapter()
     });
 }
 
-$(document).ready(ready);
-$(document).on('page:load', ready);
+$(document).on('turbolinks:load', ready);

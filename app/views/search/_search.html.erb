@@ -1,6 +1,5 @@
-<%= form_tag search_index_path, method: :get do %>
-  <%= text_field_tag "query", params[:query], class: "form-control typeahead", id: "search" %>
-  <br />
-  <%= submit_tag "Search", class: 'btn btn-success' %>
+<%= form_tag search_index_path, method: :get, id: "search_form" do %>
+  <%= text_field_tag :query, params[:query], class: "form-control typeahead", id: "search" %>
+  <%= submit_tag "Search", class: 'btn btn-success', id: 'search_button' %>
 <% end %>
 <hr>

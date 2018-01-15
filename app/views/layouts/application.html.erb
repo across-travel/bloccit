@@ -17,6 +17,7 @@
         <% if current_user %>
           <li><%= link_to "Notifications (#{StreamRails.feed_manager.get_notification_feed(current_user.id).get()['unread']})", notifications_path %></li>
           <li><%= link_to "Invite", new_invite_path %></li>
+          <%= render partial: "search/search" %>
         <% end -%>
 
         <div class="pull-right user-info">

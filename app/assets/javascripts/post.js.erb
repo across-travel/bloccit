@@ -3,12 +3,13 @@ $(function(){
   $('#post_body').atwho({at:"@", 'data':data});
 });
 
-
-gon.comments.forEach(function(comment) {
-	$(document).ready(function() { 
-	  $('#reply-' + comment.id).click(function(e){
-	  	e.preventDefault();
-	  	$('#new_comment-' + comment.id).slideToggle();
+if(gon.comments) {
+	gon.comments.forEach(function(comment) {
+		$(document).ready(function() { 
+		  $('#reply-' + comment.id).click(function(e){
+		  	e.preventDefault();
+		  	$('#new_comment-' + comment.id).slideToggle();
+			});
 		});
-	});
-})
+	})
+}

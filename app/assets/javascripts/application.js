@@ -12,6 +12,7 @@
 //
 
 //= require jquery
+//= require jquery.turbolinks
 //= require jquery_ujs
 //= require jquery.atwho
 //= require typeahead
@@ -19,3 +20,4 @@
 //= require bootstrap
 //= require_tree .
 
+//= require turbolinks

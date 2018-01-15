@@ -1,6 +1,5 @@
-<%= render partial: "search/search" %>
 
-<% unless @posts.nil? %>
+<% unless @posts.nil? || @posts.empty? %>
   <h1>Posts</h1>
 
   <% @posts.each do |post| %>
@@ -8,7 +7,7 @@
   <% end %>
 <% end %>
 
-<% unless @users.nil? %>
+<% unless @users.nil? || @users.empty? %>
   <h1>Users</h1>
 
   <div class="row">
@@ -28,7 +27,7 @@
   </div>
 <% end %>
 
-<% unless @topics.nil? %>
+<% unless @topics.nil? || @topics.empty? %>
   <h1>Topics</h1>
    
   <div class="row">
