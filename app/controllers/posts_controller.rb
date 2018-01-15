@@ -58,9 +58,9 @@ class PostsController < ApplicationController
   end
 
   def hashtags
-    tag = Tag.find_by(name: params[:name])
-    @posts = tag.posts
-    @comments = tag.comments
+    @tag = Tag.find_by(name: params[:name])
+    @posts = @tag.posts
+    @comments = @tag.comments
   end
 
   private

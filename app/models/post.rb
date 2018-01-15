@@ -89,7 +89,6 @@ class Post < ApplicationRecord
     hashtags = self.body.scan(/#\w+/)
     hashtags.uniq.map do |hashtag|
       tag = Tag.find_or_create_by(name: hashtag.downcase.delete('#'))
-
       post.tags << tag
     end
   end

@@ -27,4 +27,8 @@ module ApplicationHelper
     end
     body.gsub(/#\w+/){|word| link_to word, "/hashtag/#{word.delete('#')}"}.html_safe
   end
+
+  def render_with_hashtag(name)
+    hashtag = "#" + name
+  end
 end

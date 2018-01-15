@@ -8,23 +8,6 @@ RSpec.describe TopicsController, type: :controller do
   let(:my_private_topic) { create(:topic, public: false) }
 
   context "guest" do
-    describe "GET index" do
-      it "returns http success" do
-        get :index
-        expect(response).to have_http_status(:success)
-      end
-
-      it "assigns Topic.all to topic" do
-        get :index
-        expect(assigns(:topics)).to eq([my_topic])
-      end
-
-      it "does not include private topics in @topics" do
-        get :index
-        expect(assigns(:topics)).not_to include(my_private_topic)
-      end
-    end
-
     describe "GET show" do
       it "returns http success" do
         get :show, params: {id: my_topic.id}
@@ -92,18 +75,6 @@ RSpec.describe TopicsController, type: :controller do
       create_session(user)
     end
 
-    describe "GET index" do
-      it "returns http success" do
-        get :index
-        expect(response).to have_http_status(:success)
-      end
-
-      it "assigns Topic.all to topic" do
-        get :index
-        expect(assigns(:topics)).to eq([my_topic, my_private_topic])
-      end
-    end
-
     describe "GET show" do
       it "returns http success" do
         get :show, params: {id: my_topic.id}
@@ -164,18 +135,6 @@ RSpec.describe TopicsController, type: :controller do
     before do
       user = User.create!(username: '@admin', name: "Bloccit User", email: "user@bloccit.com", password: "helloworld", role: :admin)
       create_session(user)
-    end
-
-    describe "GET index" do
-      it "returns http success" do
-        get :index
-        expect(response).to have_http_status(:success)
-      end
-
-      it "assigns Topic.all to topic" do
-        get :index
-        expect(assigns(:topics)).to eq([my_topic, my_private_topic])
-      end
     end
 
     describe "GET show" do
@@ -278,9 +237,9 @@ RSpec.describe TopicsController, type: :controller do
         expect(count).to eq 0
       end
 
-      it "redirects to topics index" do
+      it "redirects to the news_feed" do
         delete :destroy, params: {id: my_topic.id}
-        expect(response).to redirect_to topics_path
+        expect(response).to redirect_to news_feed_path
       end
     end
   end

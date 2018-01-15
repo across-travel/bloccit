@@ -1,23 +1,29 @@
-<h1>Posts</h1>
+<h1><%= render_with_hashtag(@tag.name) %></h1>
 
-<% @posts.each do |post| %>
-  <div class="media">
-    <%= render partial: 'votes/voting', locals: { post: post } %>
-    <div class="media-body">
-      <h4 class="media-heading">
-        <%= link_to post.title, topic_post_path(post.topic, post) %>
-      </h4>
+<% unless @posts.nil? || @posts.empty? %>
+  <h2>Posts</h2>
 
-      <small>
-        submitted <%= time_ago_in_words(post.created_at) %> ago by <%= post.user.name %> <br>
-        <%= post.comments.count %> Comments
-       </small>
+  <% @posts.each do |post| %>
+    <div class="media">
+      <%= render partial: 'votes/voting', locals: { post: post } %>
+      <div class="media-body">
+        <h4 class="media-heading">
+          <%= link_to post.title, topic_post_path(post.topic, post) %>
+        </h4>
+
+        <small>
+          submitted <%= time_ago_in_words(post.created_at) %> ago by <%= post.user.name %> <br>
+          <%= post.comments.count %> Comments
+         </small>
+      </div>
     </div>
-  </div>
+  <% end %>
 <% end %>
 
-<h1>Comments</h1>
+<% unless @comments.nil? || @comments.empty? %>
+  <h2>Comments</h2>
 
-<div>
-  <%= render @comments %>
-</div>
+  <div>
+    <%= render @comments %>
+  </div>
+<% end %>

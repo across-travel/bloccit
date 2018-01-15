@@ -1,4 +1,3 @@
-
 <% unless @posts.nil? || @posts.empty? %>
   <h1>Posts</h1>
 
@@ -41,6 +40,24 @@
             <small>
               <%= topic.description %>
             </small>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<% unless @tags.nil? || @tags.empty? %>
+  <h1>Tags</h1>
+   
+  <div class="row">
+    <div class="col-md-8">
+      <% @tags.each do |tag| %>
+        <div class="media">
+          <div class="media-body">
+            <h4 class="media-heading">
+              <%= link_to render_with_hashtag(tag.name), "/hashtag/#{tag.name}" %>
+            </h4>
           </div>
         </div>
       <% end %>
