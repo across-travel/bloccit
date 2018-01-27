@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  get "/invites/:provider/contact_callback" => "invites#new"
+  get "/contacts/failure" => "invites#failure"
+
   scope path: '/feed', controller: :feeds do
     get 'news_feed', to: :news_feed
     get 'notifications', to: :notifications

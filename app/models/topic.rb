@@ -18,6 +18,11 @@ class Topic < ApplicationRecord
 
   after_create do
     self.user.subscribe(self)
+    [StreamRails.feed_manager.get_feed("timeline", self.user.id).follow('topic', self.id)]
+  end
+
+  after_destroy do
+    [StreamRails.feed_manager.get_feed("timeline", self.user.id).unfollow('topic', self.id)]
   end
 
   # def check_role

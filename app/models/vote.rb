@@ -8,6 +8,10 @@ class Vote < ApplicationRecord
   include StreamRails::Activity
   as_activity
 
+  def activity_should_sync?
+    self.post.topic.nil?
+  end
+
   def activity_notify
     if self.value == 1
       [StreamRails.feed_manager.get_notification_feed(self.post.user_id)]
@@ -24,6 +28,11 @@ class Vote < ApplicationRecord
 
   after_update do
     self.value == -1 ? self.user.unlike(self.post) : self.user.like(self.post)
+  end
+
+  before_destroy do
+    feed = StreamRails.feed_manager.get_user_feed(self.user.id)
+    feed.remove_activity("Vote:#{self.id}", foreign_id=true)
   end
 
   private

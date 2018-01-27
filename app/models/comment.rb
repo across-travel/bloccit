@@ -20,6 +20,10 @@ class Comment < ApplicationRecord
   include StreamRails::Activity
   as_activity
 
+  def activity_should_sync?
+    self.post.topic.nil?
+  end
+
   def activity_notify
     [StreamRails.feed_manager.get_notification_feed(self.post.user.id)]
   end
@@ -79,5 +83,10 @@ class Comment < ApplicationRecord
       self.mentions.find_or_create_by(username: mention, mentionable: self)
       # comment.mentions << username if username.persisted?
     end
+  end
+
+  before_destroy do
+    feed = StreamRails.feed_manager.get_user_feed(self.user.id)
+    feed.remove_activity("Comment:#{self.id}", foreign_id=true)
   end
 end

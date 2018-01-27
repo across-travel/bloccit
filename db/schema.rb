@@ -30,7 +30,6 @@ ActiveRecord::Schema.define(version: 20171210173509) do
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id", "phone", "email"], name: "index_invites_on_user_id_and_phone_and_email", unique: true
     t.index ["user_id"], name: "index_invites_on_user_id"
   end
 

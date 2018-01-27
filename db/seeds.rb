@@ -4,7 +4,7 @@ require 'random_data'
 10.times do
   User.create!(
     name:     Faker::Name.name,
-    username: "@" + Faker::Internet.user_name,
+    username: "@" + Faker::Name.first_name,
     email:    Faker::Internet.email,
     password: 'helloworld'
   )

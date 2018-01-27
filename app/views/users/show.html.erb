@@ -23,6 +23,7 @@
         </section>
         <section class="public">
           <% if current_user == @user %>
+            <%= link_to "New Post", new_post_path, class: 'btn btn-success' %>
             <% if @user.private? %>
               <%= button_to "Make your profile public", public_path, class: "btn btn-success" %>
             <% else %>

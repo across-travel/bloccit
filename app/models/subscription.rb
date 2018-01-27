@@ -19,6 +19,9 @@ class Subscription < ApplicationRecord
     if self.topic.user == self.user && !self.destroyed_by_association
       errors.add(:base, "Cannot delete as you are the admin")
       throw(:abort)
+    else
+      feed = StreamRails.feed_manager.get_user_feed(self.user.id)
+      feed.remove_activity("Subscription:#{self.id}", foreign_id=true)
     end
   end
 

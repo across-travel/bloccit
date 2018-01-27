@@ -19,7 +19,7 @@ class Invite < ApplicationRecord
     unless self.email.empty?
       InviteMailer.invite_user(self, self.user).deliver_now
     end
-    unless self.phone.empty?
+    unless self.phone.nil? || self.phone.empty?
       account_sid = "AC06a7675f8463b81e262cc9ede3edf07f" # Your Account SID from www.twilio.com/console
       auth_token = ENV['TWILIO_AUTH_TOKEN']   # Your Auth Token from www.twilio.com/console
 

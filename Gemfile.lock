@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/Diego81/omnicontacts.git
+  revision: 55914ca63f9e2d96d476560e3eaebbaf448c3c5d
+  specs:
+    omnicontacts (0.3.9)
+      json
+      rack
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -107,6 +115,7 @@ GEM
     jquery-turbolinks (2.1.0)
       railties (>= 3.1.0)
       turbolinks
+    json (2.1.0)
     jwt (2.1.0)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -288,6 +297,7 @@ DEPENDENCIES
   jquery-rails
   jquery-turbolinks
   listen (>= 3.0.5, < 3.2)
+  omnicontacts!
   pg
   pry
   puma (~> 3.7)

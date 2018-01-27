@@ -9,6 +9,7 @@ class RelationshipsController < ApplicationController
 
   def destroy
     user = Relationship.find(params[:id]).followed
+    StreamRails.feed_manager.get_feed("timeline", current_user.id).unfollow("user", user.id)
     current_user.unfollow(user)
     redirect_to user
   end

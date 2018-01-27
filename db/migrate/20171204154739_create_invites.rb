@@ -9,6 +9,5 @@ class CreateInvites < ActiveRecord::Migration[5.1]
     end
 
     add_index :invites, :user_id
-    add_index :invites, [:user_id, :phone, :email], unique: true
   end
 end

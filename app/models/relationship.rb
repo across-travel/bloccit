@@ -6,11 +6,12 @@ class Relationship < ApplicationRecord
   as_activity
 
   after_create do
-    StreamRails.feed_manager.follow_user(follower_id, followed_id)
+    [StreamRails.feed_manager.get_feed("timeline", follower_id).follow("user", followed_id)]
   end
 
-  after_destroy do
-    StreamRails.feed_manager.unfollow_user(follower_id, followed_id)
+  before_destroy do
+    feed = StreamRails.feed_manager.get_user_feed(self.follower.id)
+    feed.remove_activity("Relationship:#{self.id}", foreign_id=true)
   end
 
   def activity_notify

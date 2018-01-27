@@ -32,6 +32,10 @@ class Post < ApplicationRecord
   include StreamRails::Activity
   as_activity
 
+  def activity_should_sync?
+    self.topic.present? && activity_verb == "Post" ? false : true
+  end
+
   def activity_object
     self
   end
@@ -61,7 +65,7 @@ class Post < ApplicationRecord
   after_create do
     unless self.topic.nil?
       feed = StreamRails.feed_manager.get_feed("topic", self.topic.id)
-      activity_data = {actor: "User:#{self.user.id}", verb: "post", object: "Post:#{self.id}", target: "Topic:#{self.topic.id}", foreign_id: "post:#{self.id}"}
+      activity_data = {actor: "User:#{self.user.id}", verb: "topic_post", object: "Post:#{self.id}", target: "Topic:#{self.topic.id}", foreign_id: "post:#{self.id}"}
       activity_response = feed.add_activity(activity_data)
     end
   end
@@ -70,6 +74,9 @@ class Post < ApplicationRecord
     unless self.topic.nil?
       feed = StreamRails.feed_manager.get_feed("topic", self.topic.id)
       feed.remove_activity("post:#{self.id}", foreign_id=true)
+    else
+      feed = StreamRails.feed_manager.get_user_feed(self.user.id)
+      feed.remove_activity("Post:#{self.id}", foreign_id=true)
     end
   end
 
