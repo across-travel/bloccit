@@ -1,5 +1,4 @@
 require 'rails_helper'
-include SessionsHelper
 
 RSpec.describe SubscriptionsController, type: :controller do
   let(:subscriber) { create(:user) }
@@ -10,18 +9,18 @@ RSpec.describe SubscriptionsController, type: :controller do
   describe "not signed in" do
     it "redirects #create to login page" do
       post :create, params: {subscription: subscription}
-      expect(response).to redirect_to(new_session_path)
+      expect(response).to redirect_to(new_user_session_path)
     end
 
     it "redirects #destroy to login page" do
       delete :destroy, params: {id: subscription.id}
-      expect(response).to redirect_to(new_session_path)
+      expect(response).to redirect_to(new_user_session_path)
     end
   end
 
   describe "not signed in" do
     before do
-      create_session(subscriber)
+      sign_in(subscriber)
     end
 
     it "redirects #create to topic page" do

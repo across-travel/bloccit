@@ -1,6 +1,5 @@
 require 'rails_helper'
 include RandomData
-include SessionsHelper
 
 RSpec.describe TopicsController, type: :controller do
   let(:user) { create(:user, role: :admin) }
@@ -26,28 +25,28 @@ RSpec.describe TopicsController, type: :controller do
 
       it "redirects from private topics" do
         get :show, params: {id: my_private_topic.id}
-        expect(response).to redirect_to(new_session_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
 
     describe "GET new" do
       it "returns http redirect" do
         get :new
-        expect(response).to redirect_to(new_session_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
 
     describe "POST create" do
       it "returns http redirect" do
         post :create, params: {topic: {name: RandomData.random_sentence, description: RandomData.random_paragraph, user: user}}
-        expect(response).to redirect_to(new_session_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
 
     describe "GET edit" do
       it "returns http redirect" do
         get :edit, params: {id: my_topic.id}
-        expect(response).to redirect_to(new_session_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
 
@@ -57,22 +56,22 @@ RSpec.describe TopicsController, type: :controller do
         new_description = RandomData.random_paragraph
 
         put :update, params: {id: my_topic.id, topic: {name: new_name, description: new_description, user: user }}
-        expect(response).to redirect_to(new_session_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
 
     describe "DELETE destroy" do
       it "returns http redirect" do
         delete :destroy, params: {id: my_topic.id}
-        expect(response).to redirect_to(new_session_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
   end
 
   context "member user" do
     before do
-      user = User.create!(username: '@admin', name: "Bloccit User", email: "user@bloccit.com", password: "helloworld", role: :member)
-      create_session(user)
+      user = User.create!(username: '@admin', name: "Bloccit User", email: "user@bloccit.com", password: "helloworld", role: :member, confirmed_at: Time.now)
+      sign_in(user)
     end
 
     describe "GET show" do
@@ -133,8 +132,8 @@ RSpec.describe TopicsController, type: :controller do
 
   context "admin user" do
     before do
-      user = User.create!(username: '@admin', name: "Bloccit User", email: "user@bloccit.com", password: "helloworld", role: :admin)
-      create_session(user)
+      user = User.create!(username: '@admin', name: "Bloccit User", email: "user@bloccit.com", password: "helloworld", role: :admin, confirmed_at: Time.now)
+      sign_in(user)
     end
 
     describe "GET show" do

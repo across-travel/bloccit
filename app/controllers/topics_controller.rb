@@ -1,5 +1,5 @@
 class TopicsController < ApplicationController
-  before_action :require_sign_in, except: [:show]
+  before_action :authenticate_user!, except: [:show]
   before_action :authorize_user, except: [:show]
 
   def show
@@ -7,7 +7,7 @@ class TopicsController < ApplicationController
 
     unless @topic.public || current_user
       flash[:alert] = "You must be signed in to view private topics."
-      redirect_to new_session_path
+      redirect_to new_user_session_path
     end
   end
 

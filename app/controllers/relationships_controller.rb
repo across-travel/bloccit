@@ -1,5 +1,5 @@
 class RelationshipsController < ApplicationController
-  before_action :require_sign_in
+  before_action :authenticate_user!
 
   def create
     user = User.find(params[:followed_id])

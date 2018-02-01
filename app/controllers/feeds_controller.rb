@@ -1,5 +1,5 @@
 class FeedsController < ApplicationController
-  before_action :require_sign_in
+  before_action :authenticate_user!
   before_action :create_enricher
 
   def notifications

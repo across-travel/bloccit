@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   include CommentsHelper
-  before_action :require_sign_in
+  before_action :authenticate_user!
   before_action :authorize_user, only: [:destroy]
   before_action :find_commentable
 

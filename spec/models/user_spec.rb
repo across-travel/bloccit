@@ -11,7 +11,6 @@ RSpec.describe User, type: :model do
 
   it { is_expected.to validate_presence_of(:username) }
   it { is_expected.to validate_length_of(:username).is_at_least(1) }
-  it { is_expected.to validate_uniqueness_of(:username) }
   it { is_expected.to allow_value("@admin_user123").for(:username) }
 
   # Shoulda tests for name
@@ -21,12 +20,10 @@ RSpec.describe User, type: :model do
   # Shoulda tests for email
   it { is_expected.to validate_presence_of(:email) }
   it { is_expected.to validate_uniqueness_of(:email) }
-  it { is_expected.to validate_length_of(:email).is_at_least(3) }
   it { is_expected.to allow_value("user@bloccit.com").for(:email) }
 
   # Shoulda tests for password
   it { is_expected.to validate_presence_of(:password) }
-  it { is_expected.to have_secure_password }
   it { is_expected.to validate_length_of(:password).is_at_least(6) }
 
   describe "attributes" do
@@ -85,9 +82,10 @@ RSpec.describe User, type: :model do
 
   end
 
-  describe "invalid user" do
+  describe "invalid and duplicate attributes in user" do
     let(:user_with_invalid_name) { build(:user, name: "") }
     let(:user_with_invalid_email) { build(:user, email: "") }
+    let(:user_with_duplicate_username) { build(:user, username: user.username) }
 
     it "should be an invalid user due to blank name" do
       expect(user_with_invalid_name).to_not be_valid
@@ -95,6 +93,11 @@ RSpec.describe User, type: :model do
 
     it "should be an invalid user due to blank email" do
       expect(user_with_invalid_email).to_not be_valid
+    end
+
+    it "should be an invalid user due to a duplicate username" do
+      p user_with_duplicate_username.errors[:username]
+      expect(user_with_duplicate_username).to_not be_valid
     end
   end
 

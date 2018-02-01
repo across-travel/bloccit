@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  devise_for :users
   get "/invites/:provider/contact_callback" => "invites#new"
   get "/contacts/failure" => "invites#failure"
 
@@ -22,7 +23,7 @@ Rails.application.routes.draw do
   post '/private', to: 'users#private'
   post '/public', to: 'users#public'
 
-  resources :topics do
+  resources :topics, except: [:index] do
     resources :posts, except: [:index]
   end
 
@@ -34,7 +35,7 @@ Rails.application.routes.draw do
     post '/down-vote' => 'votes#down_vote', as: :down_vote
   end
 
-  resources :users, only: [:new, :create, :show, :index] do
+  resources :users, only: [:show] do
     member do
       get :following, :followers, :subscriptions
     end
@@ -49,7 +50,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :sessions, only: [:new, :create, :destroy]
   resources :relationships, only: [:create, :destroy]
 
   get '/hashtag/:name', to: 'posts#hashtags'

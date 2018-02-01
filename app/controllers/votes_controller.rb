@@ -1,5 +1,5 @@
 class VotesController < ApplicationController
-  before_action :require_sign_in
+  before_action :authenticate_user!
 
   def up_vote
     update_vote(1)

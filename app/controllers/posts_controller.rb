@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :require_sign_in, except: :show
+  before_action :authenticate_user!, except: :show
   before_action :authorize_user, except: [:show, :new, :create, :hashtags]
   before_action :topic_locate, only: [:new, :create]
   before_action :usernames_load, only: [:show, :new, :edit]

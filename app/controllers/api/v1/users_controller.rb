@@ -12,15 +12,15 @@ class Api::V1::UsersController < Api::V1::BaseController
     render json: users, status: 200
   end
 
-  def update
-    user = User.find(params[:id])
+  # def update
+  #   user = User.find(params[:id])
 
-    if user.update_attributes(user_params)
-      render json: user, status: 200
-    else
-      render json: { error: "User update failed", status: 400 }, status: 400
-    end
-  end
+  #   if user.update_attributes(user_params)
+  #     render json: user, status: 200
+  #   else
+  #     render json: { error: "User update failed", status: 400 }, status: 400
+  #   end
+  # end
 
   def create
     user = User.new(user_params)

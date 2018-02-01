@@ -1,6 +1,6 @@
 class InvitesController < ApplicationController
   include InvitesHelper
-  before_action :require_sign_in
+  before_action :authenticate_user!
   before_action :invite_params, only: [:create]
 
   def new

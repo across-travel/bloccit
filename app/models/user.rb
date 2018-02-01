@@ -1,4 +1,9 @@
 class User < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable, :confirmable
+
   searchkick word_start: [:username, :name]
 
   def search_data
@@ -11,6 +16,7 @@ class User < ApplicationRecord
   recommends :topics, :posts
 
   before_save { self.email = email.downcase if email.present? }
+  before_validation { self.username = self.username.prepend("@") if self.username.present? && self.username.first != "@" }
   before_save { self.role ||= :member }
 
   before_create :generate_auth_token
@@ -35,22 +41,22 @@ class User < ApplicationRecord
   has_many :followers, through: :passive_relationships, source: :follower
 
   validates :username, length: { minimum: 1, maximum: 20 },
-                       format: { with: /\A@[^@\s][a-zA-Z0-9\w]+\Z/ },
+                       format: { with: /\A@[a-zA-Z0-9\w]+\Z/ },
                        presence: true,
                        uniqueness: true
 
   validates :name, length: { minimum: 1, maximum: 100 }, presence: true
 
-  validates :password, presence: true, length: { minimum: 6 }, unless: :password_digest
-  validates :password, length: { minimum: 6 }, allow_blank: true
+  # validates :password, presence: true, length: { minimum: 6 }, unless: :encrypted_password
+  # validates :password, length: { minimum: 6 }, allow_blank: true
 
-  validates :email,
-            presence: true,
-            format: { with: /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i },
-            uniqueness: { case_sensitive: false },
-            length: { minimum: 3, maximum: 254 }
+  # validates :email,
+  #           presence: true,
+  #           format: { with: /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i },
+  #           uniqueness: { case_sensitive: false },
+  #           length: { minimum: 3, maximum: 254 }
 
-  has_secure_password
+  # has_secure_password
 
   enum role: [:member, :admin]
 

@@ -6,7 +6,8 @@ require 'random_data'
     name:     Faker::Name.name,
     username: "@" + Faker::Name.first_name,
     email:    Faker::Internet.email,
-    password: 'helloworld'
+    password: 'password',
+    confirmed_at: Time.now
   )
 end
 
@@ -15,8 +16,9 @@ admin = User.create!(
   name:     'Admin User',
   username: '@admin',
   email:    'admin@example.com',
-  password: 'helloworld',
-  role:     'admin'
+  password: 'password',
+  role:     'admin',
+  confirmed_at: Time.now
 )
 
 # Create a member
@@ -24,7 +26,8 @@ member = User.create!(
   name:     'Member User',
   username: '@member',
   email:    'member@example.com',
-  password: 'helloworld'
+  password: 'password',
+  confirmed_at: Time.now
 )
 
 users = User.all

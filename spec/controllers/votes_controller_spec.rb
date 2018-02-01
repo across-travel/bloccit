@@ -1,5 +1,4 @@
 require 'rails_helper'
-include SessionsHelper
 
 RSpec.describe VotesController, type: :controller do
   let(:my_topic) { create(:topic, user: user) }
@@ -13,21 +12,21 @@ RSpec.describe VotesController, type: :controller do
     describe "POST up_vote" do
       it "redirects the user to the sign in view" do
         post :up_vote, params: { post_id: user_post.id }
-        expect(response).to redirect_to(new_session_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
 
     describe "POST down_vote" do
       it "redirects the user to the sign in view" do
         post :down_vote, params: { post_id: user_post.id }
-        expect(response).to redirect_to(new_session_path)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
   end
 
   context "signed in user" do
     before do
-      create_session(my_user)
+      sign_in(my_user)
       request.env["HTTP_REFERER"] = topic_post_path(my_topic, user_post)
     end
 

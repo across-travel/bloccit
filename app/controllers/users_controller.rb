@@ -1,10 +1,6 @@
 class UsersController < ApplicationController
   include UsersHelper
-  before_action :require_sign_in, only: [:following, :followers]
-
-  def new
-    @user = User.new
-  end
+  before_action :authenticate_user!, only: [:following, :followers]
 
   def show
     @user = User.find(params[:id])
@@ -13,24 +9,6 @@ class UsersController < ApplicationController
     @comments = @user.comments
     @similar_raters = find_similar_users(@user.similar_raters)[0..2]
     @collection = single_collection(@posts, @votes, @comments)
-  end
-
-  def create
-    @user = User.new
-    @user.name = params[:user][:name]
-    @user.username = "@" + params[:user][:username]
-    @user.email = params[:user][:email]
-    @user.password = params[:user][:password]
-    @user.password_confirmation = params[:user][:password_confirmation]
-
-    if @user.save
-      flash[:notice] = "Welcome to Bloccit #{@user.name}!"
-      create_session(@user)
-      redirect_to root_path
-    else
-      flash.now[:alert] = "There was an error creating your account. Please try again."
-      render :new
-    end
   end
 
   def following

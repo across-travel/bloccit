@@ -1,5 +1,4 @@
 require 'rails_helper'
-include SessionsHelper
 
 RSpec.describe CommentsController, type: :controller do
   let(:my_topic) { create(:topic, user: user) }
@@ -13,21 +12,21 @@ RSpec.describe CommentsController, type: :controller do
     describe "POST create" do
       it "redirects the user to the sign in view" do
         post :create, format: :js, params: {post_id: my_post.id, comment: {body: RandomData.random_paragraph}}
-        expect(response).to redirect_to(new_session_path)
+        expect(response.body).to eql('You need to sign in or sign up before continuing.')
       end
     end
 
     describe "DELETE destroy" do
       it "redirects the user to the sign in view" do
         delete :destroy, format: :js, params: {post_id: my_post.id, id: my_comment.id}
-        expect(response).to redirect_to(new_session_path)
+        expect(response.body).to eql('You need to sign in or sign up before continuing.')
       end
     end
   end
 
   context "member user doing CRUD on a comment they don't own" do
     before do
-      create_session(other_user)
+      sign_in(other_user)
     end
 
     describe "POST create" do
@@ -51,7 +50,7 @@ RSpec.describe CommentsController, type: :controller do
 
   context "member user doing CRUD on a comment they own" do
     before do
-      create_session(my_user)
+      sign_in(my_user)
     end
 
     describe "POST create" do
@@ -82,7 +81,7 @@ RSpec.describe CommentsController, type: :controller do
   context "admin user doing CRUD on a comment they don't own" do
     before do
       other_user.admin!
-      create_session(other_user)
+      sign_in(other_user)
     end
 
     describe "POST create" do

@@ -1,5 +1,5 @@
 class SearchController < ApplicationController
-  before_action :require_sign_in
+  before_action :authenticate_user!
 
   def index
     search = params[:query].present? ? params[:query] : nil

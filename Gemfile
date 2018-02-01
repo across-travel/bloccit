@@ -49,6 +49,7 @@ gem 'stream_rails'
 gem 'searchkick'
 gem 'jquery-turbolinks'
 gem 'omnicontacts', git: 'https://github.com/Diego81/omnicontacts.git'
+gem 'devise'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
