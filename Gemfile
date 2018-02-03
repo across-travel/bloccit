@@ -50,6 +50,8 @@ gem 'searchkick'
 gem 'jquery-turbolinks'
 gem 'omnicontacts', git: 'https://github.com/Diego81/omnicontacts.git'
 gem 'devise'
+gem 'carrierwave',             '1.2.2'
+gem 'mini_magick',             '4.7.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -63,6 +65,7 @@ end
 group :production do
   gem 'pg'
   gem 'rails_12factor'
+  gem 'fog', '1.42'
 end
 
 group :development do

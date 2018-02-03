@@ -10,6 +10,7 @@
  
 <div class="row">
   <div class="col-md-8">
+    <%= image_tag @post.picture.url if @post.picture? %>
   	<p id="post_body"><%= render_with_hashtags_and_mentions(@post.body) %></p>
     <div>
       <h3>Comments</h3>

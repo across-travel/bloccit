@@ -5,6 +5,8 @@
       <% path = post.topic ? topic_post_path(post.topic, post) : post_path(post) %>
       <%= link_to post.title, path %>
     </h4>
+    <%= image_tag post.picture.url if post.picture? %>
+    <br>
     <small>
       submitted <%= time_ago_in_words(post.created_at) %> ago by <%= post.user.name %> <br>
       <%= post.comments.count %> Comments

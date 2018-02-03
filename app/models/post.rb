@@ -8,6 +8,8 @@ class Post < ApplicationRecord
     }
   end
 
+  mount_uploader :picture, PictureUploader
+
   belongs_to :topic, optional: true
   belongs_to :user
 	has_many :comments, as: :commentable, dependent: :destroy
@@ -28,6 +30,7 @@ class Post < ApplicationRecord
   validates :title, length: { minimum: 5 }, presence: true
   validates :body, length: { minimum: 20 }, presence: true
   validates :user, presence: true
+  validate  :picture_size
 
   include StreamRails::Activity
   as_activity
@@ -118,4 +121,13 @@ class Post < ApplicationRecord
       # post.mentions << username if username.persisted?
     end
   end
+
+  private
+
+    # Validates the size of an uploaded picture.
+    def picture_size
+      if picture.size > 5.megabytes
+        errors.add(:picture, "should be less than 5MB")
+      end
+    end
 end

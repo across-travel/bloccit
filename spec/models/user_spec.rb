@@ -96,7 +96,6 @@ RSpec.describe User, type: :model do
     end
 
     it "should be an invalid user due to a duplicate username" do
-      p user_with_duplicate_username.errors[:username]
       expect(user_with_duplicate_username).to_not be_valid
     end
   end

@@ -50,7 +50,7 @@ class PostsController < ApplicationController
     if @post.destroy
       flash[:notice] = "\"#{@post.title}\" was deleted successfully."
       redirect_to @post.topic if @post.topic
-      redirect_to posts_path if @post.topic.nil?
+      redirect_to user_path if @post.topic.nil?
     else
       flash.now[:alert] = "There was an error deleting the post."
       render :show
@@ -74,7 +74,7 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title, :body)
+    params.require(:post).permit(:title, :body, :picture)
   end
 
   def authorize_user
