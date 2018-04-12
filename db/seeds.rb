@@ -1,4 +1,5 @@
 require 'random_data'
+require 'faker'
 
 # Create Users
 10.times do
