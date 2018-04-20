@@ -1,5 +1,5 @@
 class Topic < ApplicationRecord
-  searchkick word_start: [:name, :description]
+  searchkick word_start: [:name, :description], settings: {number_of_shards: 1, number_of_replicas: 0}
 
   def search_data
     {
